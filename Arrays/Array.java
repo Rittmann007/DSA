@@ -230,22 +230,22 @@ public class Array {
         int left = 0;
         int right = arr.length-1;
         while (left <= right) {
-            int mid = (left + right)/2 ;
+            int mid = left + ((right-left)/2) ;//optimized
              
             if (arr[mid] == target) {
                 System.out.println(mid);
                 return;
             }  // now we have to determine which halve is sorted(main motive is to make our search space smalled)
             else if (arr[left] <= arr[mid]) {// if left halve is sorted
-                if (target >= arr[left] && target < arr[mid]) {
+                if (target >= arr[left] && target < arr[mid]) {//target is in left
                     right = mid-1;
-                } else {
+                } else {// target is in right
                     left = mid+1;
                 }
             } else {  // else right halve is sorted
-                if (target <= arr[right] && target > arr[mid]) {
+                if (target <= arr[right] && target > arr[mid]) {// target is in right
                     left = mid+1;
-                } else {
+                } else {// target is in left
                     right = mid-1;
                 }
             }

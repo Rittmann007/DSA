@@ -152,6 +152,9 @@ public class Q100 {
     
 //9. Find first and last position of element in sorted array
     public int[] searchRange(int[] nums, int target) {// implemented in func for better view
+        if (nums == null || nums.length == 0) {
+            return new int[] { -1, -1 };
+        }
         int first = findBound(nums, target, true);
         int last = findBound(nums, target, false);
         return new int[]{first, last};
@@ -176,6 +179,33 @@ public class Q100 {
         }
         return ans;
     }
+//10. search in rotated sorted array
+    public static void RS(int arr[],int target) {
+        int left = 0;
+        int right = arr.length-1;
+        while (left <= right) {
+            int mid = left + ((right-left)/2) ;//optimized
+             
+            if (arr[mid] == target) {
+                System.out.println(mid);
+                return;
+            }  // now we have to determine which halve is sorted(main motive is to make our search space smalled)
+            else if (arr[left] <= arr[mid]) {// if left halve is sorted
+                if (target >= arr[left] && target < arr[mid]) {//target is in left
+                    right = mid-1;
+                } else {// target is in right
+                    left = mid+1;
+                }
+            } else {  // else right halve is sorted
+                if (target <= arr[right] && target > arr[mid]) {// target is in right
+                    left = mid+1;
+                } else {// target is in left
+                    right = mid-1;
+                }
+            }
+        }
+        System.out.println(-1);
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
