@@ -191,20 +191,38 @@ public class Q100 {
                 return;
             }  // now we have to determine which halve is sorted(main motive is to make our search space smalled)
             else if (arr[left] <= arr[mid]) {// if left halve is sorted
-                if (target >= arr[left] && target < arr[mid]) {//target is in left
+                if (target >= arr[left] && target < arr[mid]) {//target is in left halve
                     right = mid-1;
-                } else {// target is in right
+                } else {// target is in right halve
                     left = mid+1;
                 }
             } else {  // else right halve is sorted
-                if (target <= arr[right] && target > arr[mid]) {// target is in right
+                if (target <= arr[right] && target > arr[mid]) {// target is in right halve
                     left = mid+1;
-                } else {// target is in left
+                } else {// target is in left halve
                     right = mid-1;
                 }
             }
         }
         System.out.println(-1);
+    }    
+
+//11. find peak element
+    public int findPeakElement(int[] nums) {
+        int low = 0,high = nums.length-1,mid = 0;
+        while(low<=high){
+            mid = low + (high-low)/2;
+            // we have to check if mid-1 or mid+1 is going out of bounds
+            if((mid==0 || nums[mid-1]<nums[mid]) && (mid==nums.length-1 || nums[mid+1]<nums[mid])){
+                return mid;
+            }
+            else if(mid > 0 && nums[mid-1]>nums[mid]){// if previous elm is greater
+                high = mid-1; //search in left
+            }else {
+                low = mid+1;// search in right
+            }
+        }
+        return -1;
     }    
     
     public static void main(String[] args) {
