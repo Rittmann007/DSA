@@ -268,6 +268,23 @@ public class Q100 {
         }
         return result.toArray(new int[result.size()][]);
     }    
+
+//14. majority element
+    public static void majority(int arr[]) {
+        int freq = 0, ans = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (freq == 0) { // initilizing our ans var
+                ans = arr[i];
+            }
+            if (ans == arr[i]) { // if same element appears
+                freq++;
+            } else {     // if different
+                freq--;
+            }
+        }
+        System.out.println(ans);
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
