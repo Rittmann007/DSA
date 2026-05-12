@@ -213,6 +213,7 @@ public class Q100 {
         while(low<=high){
             mid = low + (high-low)/2;
             // we have to check if mid-1 or mid+1 is going out of bounds
+            // and mid can be 1st or last element also
             if((mid==0 || nums[mid-1]<nums[mid]) && (mid==nums.length-1 || nums[mid+1]<nums[mid])){
                 return mid;
             }
@@ -223,6 +224,24 @@ public class Q100 {
             }
         }
         return -1;
+    }    
+
+//12. rotate array
+    public void rev(int[] nums,int i,int j){
+        while(i <= j){
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            i++;j--;
+        }
+    }
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k%n;// for case k > nums.length
+        rev(nums,0,nums.length-1);// rotate whole
+        rev(nums,0,k-1);// rotate 1st k
+        rev(nums,k,nums.length-1);// rotate rest
+        
     }    
     
     public static void main(String[] args) {
