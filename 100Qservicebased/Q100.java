@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -242,6 +244,29 @@ public class Q100 {
         rev(nums,0,k-1);// rotate 1st k
         rev(nums,k,nums.length-1);// rotate rest
         
+    }    
+
+//13. merge intervals
+     public int[][] merge(int[][] intervals) {
+        if(intervals==null || intervals.length <= 1){
+            return intervals;
+        }
+        // sort wrt starting point
+        Arrays.sort(intervals,Comparator.comparingInt(o->o[0]));
+
+        ArrayList<int[]> result = new ArrayList<>();
+        int newinterval[] = intervals[0];
+        result.add(newinterval);
+
+        for(int interval[] : intervals){
+            if(interval[0] <= newinterval[1]){
+                newinterval[1] = Math.max(newinterval[1],interval[1]);// update interval
+            }else {
+                newinterval = interval;// move to next interval
+                result.add(newinterval);
+            }
+        }
+        return result.toArray(new int[result.size()][]);
     }    
     
     public static void main(String[] args) {
