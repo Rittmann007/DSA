@@ -285,6 +285,27 @@ public class Q100 {
         }
         System.out.println(ans);
     }    
+
+//15. product of array except self
+     public int[] productExceptSelf(int[] nums) {
+        int left[] = new int[nums.length];// left elms product
+        int right[] = new int[nums.length];// right elms product
+
+        left[0] = 1;// first elm has no left
+        for(int i = 1;i<nums.length;i++){
+            left[i] = left[i-1]*nums[i-1];
+        }
+        right[nums.length-1] = 1;// last elm has no right
+        for(int i = nums.length-2;i>=0;i--){
+            right[i] = right[i+1]*nums[i+1];
+        }
+        // ith elm = product of elms in right of ith*
+        //           product of elms in left of ith
+        for(int i = 0;i<nums.length;i++){
+            nums[i] = right[i]*left[i];
+        }
+        return nums;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
