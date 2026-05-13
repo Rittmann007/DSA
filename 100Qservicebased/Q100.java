@@ -326,6 +326,26 @@ public class Q100 {
             }
         }
     }    
+
+//17. minimum size subarray sum
+     public int minSubArrayLen(int target, int[] nums) {
+        int minLenwindow = Integer.MAX_VALUE;
+        int currsum = 0;
+        int low = 0,high = 0; 
+        
+        while(high < nums.length){
+            currsum += nums[high];// increase the window
+            high++;
+
+            while(currsum >= target){
+                int currminlen = high-low;
+                minLenwindow = Math.min(minLenwindow,currminlen);//storeTheCurrentMinimumWindow
+                currsum -= nums[low];// decrease the window to get minimum
+                low++;
+            }
+        }
+        return minLenwindow==Integer.MAX_VALUE? 0: minLenwindow;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
