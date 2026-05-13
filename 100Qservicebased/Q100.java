@@ -332,7 +332,7 @@ public class Q100 {
         int minLenwindow = Integer.MAX_VALUE;
         int currsum = 0;
         int low = 0,high = 0; 
-        
+
         while(high < nums.length){
             currsum += nums[high];// increase the window
             high++;
@@ -345,6 +345,25 @@ public class Q100 {
             }
         }
         return minLenwindow==Integer.MAX_VALUE? 0: minLenwindow;
+    }    
+
+//18. maximum product subarray
+    public int maxProduct(int[] nums) {
+        int n = nums.length-1;
+        int leftProduct = 1,rightProduct = 1;
+        int ans = nums[0];
+
+        for(int i=0;i<=n;i++){
+            leftProduct = leftProduct==0? 1:leftProduct;// if 0,make it 1
+            rightProduct = rightProduct==0? 1:rightProduct;
+
+            leftProduct *= nums[i];// product of elms from left
+            rightProduct *= nums[n-i];// product of elms from right
+
+            ans = Math.max(ans,Math.max(leftProduct,rightProduct));
+        }
+
+        return ans;
     }    
     
     public static void main(String[] args) {
