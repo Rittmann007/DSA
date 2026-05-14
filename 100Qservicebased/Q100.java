@@ -351,7 +351,7 @@ public class Q100 {
     public int maxProduct(int[] nums) {
         int n = nums.length-1;
         int leftProduct = 1,rightProduct = 1;
-        int ans = nums[0];
+        int ans = nums[0];//for single element return that elm(given in ques)
 
         for(int i=0;i<=n;i++){
             leftProduct = leftProduct==0? 1:leftProduct;// if 0,make it 1
@@ -364,6 +364,34 @@ public class Q100 {
         }
 
         return ans;
+    }    
+
+//19. trapped rainwater(given no of bars of different height and width of 1 we have to calculate how much rainwater can be trapped in those unequal set of bars)
+//the approach is we have to calculate water for each bar and then add all
+//for a single bar trapped water is min(leftmaxboundary , rightmaxboundary) - heightOfTheBaritself
+    public static void TrappedR(int height[]) {
+        int h = height.length;
+        //first to calculate leftmaxboundary for each bar as an array
+        int leftmax[] = new int[h];
+        leftmax[0] = height[0];
+        for (int i = 1; i <= h-1; i++) {
+            leftmax[i] = Math.max(height[i], leftmax[i-1]);
+        }
+
+        // to calculate rightmaxboundary for each bar as an array
+        int rightmax[] = new int[h];
+        rightmax[h-1] = height[h-1];
+        for (int i = h-2; i >= 0; i--) {
+            rightmax[i] = Math.max(height[i], rightmax[i+1]);
+        }
+
+        //now to calculate the rainwater according to the formula
+        int rainwater = 0;
+        for (int i = 0; i <= h-1; i++) {
+            int max = Math.min(leftmax[i], rightmax[i]);
+            rainwater += max - height[i];  //for each bar
+        }
+        System.out.println("water is: "+ rainwater);
     }    
     
     public static void main(String[] args) {
