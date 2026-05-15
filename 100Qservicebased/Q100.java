@@ -38,18 +38,18 @@ public class Q100 {
     }
     
 //3. remove duplicates from sorted array II
-    public int removeDuplicates(int[] nums) {
-3        int n = nums.length;
-4        if(n<=2) return n;// check if 2nd idx exists
-5        int x = 2;
-6        for(int i = 2;i<n;i++){
-7            if(nums[x-2]!=nums[i]){
-8               nums[x] = nums[i];
-10                x++;
-11            }
-12        }
-13        return x;
-14    }    
+    public int removeDuplicates2(int[] nums) {
+        int n = nums.length;
+        if(n<=2) return n;// check if 2nd idx exists
+        int x = 2;
+        for(int i = 2;i<n;i++){
+            if(nums[x-2]!=nums[i]){
+               nums[x] = nums[i];
+                x++;
+            }
+        }
+        return x;
+    }    
 
 //4. Move zeros to end
     public void moveZeroes(int[] nums) {
@@ -393,9 +393,33 @@ public class Q100 {
         }
         System.out.println("water is: "+ rainwater);
     }    
+
+//Strings
+//20. reverse words in a string
+    public String reverseWords(String s) {
+        //trim removes leading and trailing spaces
+        // \\s+ is a regex which tells split by consecutive spaces
+        String arr[] = s.trim().split(" +");//store in array
+        int i = 0,j = arr.length-1;
+        while(i<=j){//reverse array
+            String temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;j--;
+        }
+        StringBuilder sc = new StringBuilder();
+        for(String str:arr){// append the words in a stringbuilder
+            sc.append(str);
+            sc.append(" ");
+        }
+        sc.setLength(sc.length()-1);// remove the last space
+        return sc.toString();
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
         System.out.println("Hello, world!");
+        String arr[] = {"rito","m","roro"};
+        System.out.println(Arrays.toString(arr));
     }
 }
