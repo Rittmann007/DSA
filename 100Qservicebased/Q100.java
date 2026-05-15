@@ -431,6 +431,24 @@ public class Q100 {
         }
         return sb.toString();
     }    
+
+//22. valid anagram
+    public static void anagram(String str1 , String str2) {
+        str1.toLowerCase(); str2.toLowerCase(); // convert to lowercase to avoid overhead
+        if (str1.length() == str2.length()) {  // if two are of equal length
+            char[] one = str1.toCharArray();
+            char[] two = str2.toCharArray();
+            Arrays.sort(one);
+            Arrays.sort(two);              // sort both alphabetically
+            if (Arrays.equals(one, two)) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        } else {
+            System.out.println("false");
+        }
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
