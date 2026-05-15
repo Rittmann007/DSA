@@ -415,6 +415,22 @@ public class Q100 {
         sc.setLength(sc.length()-1);// remove the last space
         return sc.toString();
     }    
+
+//21. longest common prefix
+    public String longestCommonPrefix(String[] strs) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.sort(strs);
+        char firstword[] = strs[0].toCharArray();
+        char lastword[] = strs[strs.length-1].toCharArray();
+
+        for(int i=0;i<firstword.length;i++){//compare 1st and last word
+           if(firstword[i]!=lastword[i]){
+            break;
+           }
+           sb.append(firstword[i]);
+        }
+        return sb.toString();
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
