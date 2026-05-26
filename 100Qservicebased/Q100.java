@@ -452,19 +452,15 @@ public class Q100 {
 
 //23. valid palindrome
     public boolean isPalindrome(String s) {
-        String str = s.trim();
-        if(str.equals("")){// for empty strings
-            return true;
-        }
-        int left = 0,right = str.length()-1;
-        while(left < right){//  for non alphanumeric from left
-            while(left<right && !Character.isLetterOrDigit(str.charAt(left))){
+        int left = 0,right = s.length()-1;
+        while(left < right){
+            while(left<right && !Character.isLetterOrDigit(s.charAt(left))){
               left++;
             }
-            while(left<right && !Character.isLetterOrDigit(str.charAt(right))){//from right
+            while(left<right && !Character.isLetterOrDigit(s.charAt(right))){
                 right--;
             }
-            if(Character.toLowerCase(str.charAt(left))!=Character.toLowerCase(str.charAt(right))){// comparison with lowercase
+            if(Character.toLowerCase(s.charAt(left))!=Character.toLowerCase(s.charAt(right))){
                 return false;
             }
             left++;right--;
@@ -478,18 +474,31 @@ public class Q100 {
             char current = chars[read];
             int count = 0;
 
-            while (read < chars.length && chars[read] == current) {
+            while (read < chars.length && chars[read] == current) {//read and count untill same
                 count++;
                 read++;
             }
-            chars[write++] = current;
-            if (count > 1) {
+            chars[write++] = current;// write the current
+            if (count > 1) {// then the number(double digit may appear)
                 for (char c : String.valueOf(count).toCharArray()) {
                     chars[write++] = c;
                 }
             }
         }
-        return write;
+        return write;// return the updated length of our array
+    }
+//25. First unique character in a string
+     public int firstUniqChar(String s) {
+        int freq[] = new int[26];
+        for(int i = 0;i<s.length();i++){
+           freq[s.charAt(i)-'a']++;
+        }
+        for(int i=0;i<s.length();i++){
+            if(freq[s.charAt(i)-'a']==1){
+                return i;
+            }
+        }
+        return -1;
     }
     
     public static void main(String[] args) {
