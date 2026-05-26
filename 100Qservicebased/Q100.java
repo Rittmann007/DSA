@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Q100 {
@@ -467,6 +468,7 @@ public class Q100 {
         }
         return true;
     }
+
 //24. string compression(different that what ive done)
      public int compress(char[] chars) { 
         int write = 0, read = 0;
@@ -487,6 +489,7 @@ public class Q100 {
         }
         return write;// return the updated length of our array
     }
+
 //25. First unique character in a string
      public int firstUniqChar(String s) {
         int freq[] = new int[26];
@@ -499,6 +502,29 @@ public class Q100 {
             }
         }
         return -1;
+    }
+
+//26. group anagrams
+     public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return new ArrayList<>();
+        }
+        // sorted string is key and their anagram's list is value
+        HashMap<String, ArrayList<String>> hs = new HashMap<>();
+        for (String str : strs) {
+            char[] arr = str.toCharArray();
+            Arrays.sort(arr);
+            String key = new String(arr);
+
+            if (hs.containsKey(key)) {// add the anagram
+                hs.get(key).add(str);
+            } else {// if not create the list and add the anagram
+                ArrayList<String> ls = new ArrayList<>();
+                ls.add(str);
+                hs.put(key, ls);
+            }
+        }
+        return new ArrayList<>(hs.values());
     }
     
     public static void main(String[] args) {
