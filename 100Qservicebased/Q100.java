@@ -449,6 +449,28 @@ public class Q100 {
             System.out.println("false");
         }
     }    
+
+//23. valid palindrome
+    public boolean isPalindrome(String s) {
+        String str = s.trim();
+        if(str.equals("")){// for empty strings
+            return true;
+        }
+        int left = 0,right = str.length()-1;
+        while(left < right){//  for non alphanumeric from left
+            while(left<right && !Character.isLetterOrDigit(str.charAt(left))){
+              left++;
+            }
+            while(left<right && !Character.isLetterOrDigit(str.charAt(right))){//from right
+                right--;
+            }
+            if(Character.toLowerCase(str.charAt(left))!=Character.toLowerCase(str.charAt(right))){// comparison with lowercase
+                return false;
+            }
+            left++;right--;
+        }
+        return true;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
