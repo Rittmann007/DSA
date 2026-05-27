@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class Q100 {
 
@@ -526,6 +527,23 @@ public class Q100 {
         }
         return new ArrayList<>(hs.values());
     }
+
+//27. remove all adjacent duplicates in string
+    public String removeDuplicates(String s) {
+        Stack<Character> sc = new Stack<>();
+        for(char c:s.toCharArray()){// for traversing the chars without using charAt() func
+            if(!sc.isEmpty() && sc.peek()==c){// if stack top is same
+                sc.pop(); 
+            }else{
+                sc.push(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for(char ch:sc){// for traversing the stack bottom to top
+            sb.append(ch);
+        }
+        return sb.toString();// in this way we dont have to use .reverse()
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
