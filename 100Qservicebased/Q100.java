@@ -544,6 +544,19 @@ public class Q100 {
         }
         return sb.toString();// in this way we dont have to use .reverse()
     }    
+
+//28. find the index of the first occurence in a string
+    public int strStr(String haystack, String needle) {
+        // because we are finding the substring we need to consider the length of needle
+        for (int i = 0; i <= (haystack.length() - needle.length()); i++) {
+            if (haystack.charAt(i) == needle.charAt(0)) {// if first char of needle matched
+                if (haystack.substring(i, needle.length() + i).equals(needle)) {// check the substring from there
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
