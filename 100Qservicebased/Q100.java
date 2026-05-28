@@ -576,6 +576,27 @@ public class Q100 {
             }
         }
         return len;
+    }
+    
+//30. Maximum avarage subarray I
+    public double findMaxAverage(int[] nums, int k) {
+        int n=nums.length;
+        int sum=0;// temporary sum
+        for(int i=0;i<k;i++){// fill up the window first
+            
+            sum+=nums[i];
+        }
+        int maxSum=sum;
+        int startIndex=0;// set up our pointers
+        int endIndex=k;
+        while(endIndex<n){// utill entire array is traversed,move the window forward one step at a time
+            sum-=nums[startIndex];//delete from start()
+            startIndex++;
+            sum+=nums[endIndex];//add from end
+            endIndex++;
+            maxSum=Math.max(maxSum,sum);
+        }
+        return (double) maxSum/k;
     }    
     
     public static void main(String[] args) {
