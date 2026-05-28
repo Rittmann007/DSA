@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -556,6 +557,25 @@ public class Q100 {
             }
         }
         return -1;
+    }    
+
+//29. longest substring without repeating characters
+    public int lengthOfLongestSubstring(String s) {
+        int left=0,right=0,len=0;
+        HashSet<Character> set= new HashSet<>();// const lookup time
+
+        while(right<s.length()){
+            char ch=s.charAt(right);
+            if(!set.contains(ch)){//add in set if all chars are unique
+                set.add(ch);
+                len=Math.max(len, right-left+1);//update with new len
+                right++;
+            } else {// if a duplicate appears remove and left++ untill duplicate is removed from set
+                set.remove(s.charAt(left));
+                left++; 
+            }
+        }
+        return len;
     }    
     
     public static void main(String[] args) {
