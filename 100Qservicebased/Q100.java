@@ -598,6 +598,26 @@ public class Q100 {
         }
         return (double) maxSum/k;
     }    
+
+//31. find all anagrams in a string
+     public List<Integer> findAnagrams(String s, String p) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int sCount[] = new int[26];//freqcount of letters of current window
+        int pCount[] = new int[26];//freqcount of letters
+        for (char c : p.toCharArray()) {// fill up pCount
+            pCount[c - 'a']++;
+        }
+        for (int i = 0; i < s.length(); i++) {// start the operation
+            sCount[s.charAt(i) - 'a']++;//add in the window
+            if (i >= p.length()) {
+                sCount[s.charAt(i - p.length()) - 'a']--;//delete from the window
+            }
+            if (Arrays.equals(sCount, pCount)) {
+                result.add(i - p.length()+1);
+            }
+        }
+        return result;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
