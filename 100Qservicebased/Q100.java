@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -618,6 +620,23 @@ public class Q100 {
         }
         return result;
     }    
+
+//32. sliding window maximum
+    public static void window(int arr[] , int k) {
+        Deque<Integer> d = new LinkedList<>(); // holds indices not values
+        for (int i = 0; i < arr.length; i++) {
+            if (!d.isEmpty() && d.getFirst() <= i-k) { 
+                d.removeFirst(); // if some idx is not part of the current window
+            }
+            while (!d.isEmpty() && arr[i] >= arr[d.getLast()]) {
+                d.removeLast();  // if the val of curr idx is greater than that of last of deque
+            }
+            d.addLast(i); // also add the current idx
+            if (i >= k-1) { // starting from first window 
+                System.out.print(arr[d.getFirst()]+",");
+            }
+        }
+    }
     
     public static void main(String[] args) {
         // Your code goes here
