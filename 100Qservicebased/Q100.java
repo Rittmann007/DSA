@@ -637,6 +637,61 @@ public class Q100 {
             }
         }
     }
+
+//33. minimum window substring
+    public static boolean contains(int freqWinS[], int freqWinT[]) {// utility func
+        for (int i = 0; i < freqWinS.length; i++) {
+            if (freqWinT[i] > freqWinS[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String minWindow(String s, String t) {
+        int freqWinS[] = new int[52];//total 52 letters, lower+uppercase
+        int freqWinT[] = new int[52];
+        int left = 0, right = 0, minLength = Integer.MAX_VALUE, minStart = 0;
+
+        for (char ch : t.toCharArray()) {// fill up the t freqArray
+            if (Character.isLowerCase(ch)) {
+                freqWinT[ch - 'a']++;
+            } else {
+                freqWinT[ch - 'A' + 26]++; // shift uppercase into 26–51 range
+            }
+        // if we want to make our sol even faster we have to trade space,
+        // instead of calculating idx of every char,we can pass the char itself in the array
+        // as an idx,in that case it'll use the unicode value of that char as the idx and will waste
+        // huge amt of array space,because in that case we needto make the size of each array 128    
+        }
+
+        while (right < s.length()) {// twoptr approach
+            char c = s.charAt(right);// increase the freq of the char in s freqarray
+            if (Character.isLowerCase(c)) {
+                freqWinS[c - 'a']++;
+            } else {
+                freqWinS[c - 'A' + 26]++;
+            }
+
+            while (contains(freqWinS, freqWinT)) {// if s freqarr contains t freqarr in it
+                if (right - left + 1 < minLength) {
+                    minLength = right - left + 1;// update minlength
+                    minStart = left;// update min window start idx
+                }
+                char ch = s.charAt(left);// decrease the freq of char from start
+                if (Character.isLowerCase(ch)) {
+                    freqWinS[ch - 'a']--;
+                } else {
+                    freqWinS[ch - 'A' + 26]--;
+                }
+                left++;
+            }
+
+            right++;
+        }
+
+        return minLength == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLength);//return substring
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
