@@ -717,6 +717,29 @@ public class Q100 {
         }
         return maxCount == Integer.MIN_VALUE ? 0 : maxCount;
     }
+
+//35. container with most water
+    public static void CmWTP(ArrayList<Integer> list) {
+        int max = 0;
+        int Lp = 0;
+        int Rp = list.size()-1;
+        
+        while (Lp < Rp) {
+            int height = Math.min(list.get(Lp), list.get(Rp));//min of two boundaries
+            int width = Rp-Lp; // formula for calculating width
+            max = Math.max(max, (height*width));
+
+            if (list.get(Rp) < list.get(Lp)) {//lower boundary controls area
+                Rp--;
+            }
+            else{ // so lower height pointer will update always
+                Lp++;
+            }
+            
+        }
+        
+        System.out.println(max);
+    }        
     
     public static void main(String[] args) {
         // Your code goes here
