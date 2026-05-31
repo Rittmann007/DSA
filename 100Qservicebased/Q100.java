@@ -740,6 +740,35 @@ public class Q100 {
         
         System.out.println(max);
     }        
+
+//36. 3 sum
+    public List<List<Integer>> threeSum(int[] nums) {
+        if (nums.length < 3)
+            return new ArrayList<>();
+
+        int left = 0, right = 0;
+        HashSet<List<Integer>> h1 = new HashSet<>();
+        Arrays.sort(nums);// sort the given array first
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            left = i + 1;// fix the current elemnt and look in the array from i+1
+            right = nums.length - 1;
+
+            while (left < right) {// run the same two sum approach
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    h1.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    left++;
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return new ArrayList<>(h1);
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
