@@ -692,6 +692,31 @@ public class Q100 {
 
         return minLength == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLength);//return substring
     }    
+
+//34. fruits into baskets  or
+//    find the length of the longest contiguous subarray with atmost 2 distinct ints
+    public int totalFruit(int[] fruits) {
+        HashMap<Integer, Integer> h1 = new HashMap<>();
+        int left = 0, right = 0, maxCount = Integer.MIN_VALUE;
+
+        while (right < fruits.length) {
+            int curr = fruits[right];// start adding from right ptr
+            h1.put(curr, h1.getOrDefault(curr, 0) + 1);//increase count or set initial
+
+            while (h1.size() > 2) {// if more than 2 distinct elements
+                int leftcurr = fruits[left];// start remove from left ptr
+                h1.put(leftcurr, h1.get(leftcurr) - 1);//decrease count
+                if (h1.get(leftcurr) == 0) {// if count 0 remove from map
+                    h1.remove(leftcurr);
+                }
+                left++;
+            }
+
+            maxCount = Math.max(maxCount, right - left + 1);
+            right++;
+        }
+        return maxCount == Integer.MIN_VALUE ? 0 : maxCount;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
