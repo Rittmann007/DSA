@@ -769,6 +769,94 @@ public class Q100 {
         }
         return new ArrayList<>(h1);
     }    
+
+//Linked list
+//37. Reverse linked list
+    public ListNode reverseList(ListNode head) {
+     ListNode prev = null;
+     ListNode curr = head;
+     ListNode next;
+     while(curr != null){
+        next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+     }   
+     return head = prev;
+    }    
+
+//38. Linked List cycle
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+//39. Linked List Cycle II(detect and return the intersection point)
+     public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        boolean flag = false;
+        while(fast != null && fast.next != null){
+          slow = slow.next;
+          fast = fast.next.next;
+          if(slow == fast){
+            flag = true;
+            break;
+          }
+        }
+        if(flag == false){
+            return null;
+        }else{
+            slow = head;
+            while(slow != fast){
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return fast;
+        }
+    }
+    
+//40. Middle of the Linked List
+     public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    
+//41. Intersection of two linked lists
+     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+        while(a != b){
+            if(a == null){
+                a = headB;
+            }
+            else if(b == null){
+                b = headA;
+            }else{
+                a = a.next;
+                b = b.next;
+            }
+        }
+        if(a == null){ // if no intersection exists
+            return null;
+        }else{
+            return a;
+        }
+    }
+        
     
     public static void main(String[] args) {
         // Your code goes here
