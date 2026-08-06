@@ -885,6 +885,24 @@ public class Q100 {
         }
         return temp.next;
     }    
+
+//43. remove nth node from end of list(cannot use size of linked list)
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(-1);// for handling edgecases
+        dummy.next = head;
+
+        ListNode ptr1 = dummy;// take two ptrs
+        ListNode ptr2 = dummy;
+        for(int i = 0 ; i<n ; i++){// move 2nd n steps ahead
+            ptr2 = ptr2.next;
+        }
+        while(ptr2 != null && ptr2.next != null){// move both untill ptr2.next = null
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+        }
+        ptr1.next = ptr1.next.next;
+        return dummy.next;
+    }    
         
     
     public static void main(String[] args) {
