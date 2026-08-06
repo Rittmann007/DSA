@@ -903,6 +903,46 @@ public class Q100 {
         ptr1.next = ptr1.next.next;
         return dummy.next;
     }    
+
+//44. Palindrome linked list
+    public ListNode middle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode middle = middle(head);// find middle
+
+        ListNode prev = null;// reverse 2nd half
+        ListNode curr = middle;
+        ListNode next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        ListNode left = head;
+        ListNode right = prev;
+
+        while (right != null) {// then compare
+            if (left.val != right.val) {
+                return false;
+            }
+            left = left.next;
+            right = right.next;
+        }
+        return true;
+    }    
         
     
     public static void main(String[] args) {
