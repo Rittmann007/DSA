@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
+import org.w3c.dom.Node;
+
 public class Q100 {
 
 // Arrays    
@@ -943,7 +945,61 @@ public class Q100 {
         }
         return true;
     }    
-        
+
+//45. Sort List
+    public static Node Mergemiddle(Node heading) {
+        Node slow = heading;
+        Node fast = heading.next;// for taking 1st half's last node as our middle
+        while (fast != null && fast.next != null ) {
+            slow = slow.next; // +1
+            fast = fast.next.next; // +2
+        }
+        return slow;
+    }    
+    public static Node merge(Node left , Node right) {
+        Node MergeLL = new Node(-1); // new sorted LL
+        Node temp = MergeLL;
+
+        while (left != null && right != null) {
+            if (left.data < right.data) {
+                temp.next = left;
+                left = left.next;
+                temp = temp.next;
+            }
+            else{
+                temp.next = right;
+                right = right.next;
+                temp = temp.next;
+            }
+        }
+
+        while (left != null) {
+            temp.next = left;
+            left = left.next;
+            temp = temp.next;
+        }
+        while (right != null) {
+            temp.next = right;
+            right = right.next;
+            temp = temp.next;
+        }
+
+        return MergeLL.next;// return the sorted head
+    }     
+    public static Node mergeSort(Node heading) {
+    // after repeated breaking one or zero nodes remain
+        if (heading == null || heading.next == null) {
+            return heading;
+        }
+        Node middle = Mergemiddle(heading);
+        Node rightHead = middle.next;
+        middle.next = null;
+
+        Node newleft  = mergeSort(heading);//for left halve
+        Node newright = mergeSort(rightHead);//for right halve
+
+        return merge(newleft,newright);//return the sorted head
+    }        
     
     public static void main(String[] args) {
         // Your code goes here
