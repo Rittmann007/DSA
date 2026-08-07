@@ -1057,6 +1057,39 @@ public class Q100 {
         }
         return head;
     }    
+
+//48. copy list with random pointer
+    public Node copyRandomList(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Node curr = head;
+        while (curr != null) {// add duplicates in between the originals
+            Node New = new Node(curr.val);
+            New.next = curr.next;
+            curr.next = New;
+            curr = New.next;
+        }
+        curr = head;
+        while (curr != null) {// copy the random ptr seq between duplicates
+            if (curr.random != null) {
+                curr.next.random = curr.random.next;
+            }
+            curr = curr.next.next;
+        }
+        curr = head;
+        Node newhead = head.next;
+        Node newcurr = newhead;
+        while (curr != null) {// break the duplicate from original
+            curr.next = newcurr.next;
+            curr = curr.next;
+            if (curr != null) {
+                newcurr.next = curr.next;
+                newcurr = newcurr.next;
+            }
+        }
+        return newhead;// return the duplicate head
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
