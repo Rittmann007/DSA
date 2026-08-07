@@ -1038,7 +1038,7 @@ public class Q100 {
         Node curr = head;
         while (curr != null) {
             if (curr.child != null) {// if a node has a child
-            //flatten the child node by attaching then linearly to curr node
+            //flatten the child node by attaching them linearly to curr node
                 Node next = curr.next;// store curr.next for future
                 curr.next = flatten(curr.child);// recursion
                 curr.next.prev = curr;
@@ -1089,6 +1089,28 @@ public class Q100 {
             }
         }
         return newhead;// return the duplicate head
+    }  
+
+//49. reverse nodes in k group
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode temp = head;
+        for (int i = 0; i < k; i++) {// check if k nodes exists
+            if (temp == null) {
+                return head;
+            }
+            temp = temp.next;
+        }
+        // recursively reverse the rest of the LL, and return the new head
+        ListNode remainingHead = reverseKGroup(temp, k);
+
+        temp = head;// now attach the the curr k group in reverse to the new head
+        for (int i = 0; i < k; i++) {
+            ListNode next = temp.next;
+            temp.next = remainingHead;
+            remainingHead = temp;
+            temp = next;
+        }
+        return remainingHead;// this becomes the new head
     }    
     
     public static void main(String[] args) {
