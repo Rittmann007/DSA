@@ -1029,6 +1029,34 @@ public class Q100 {
         }
         return result.next;
     }
+
+//47. flatten a multilevel doubly linked list
+    public Node flatten(Node head) {
+        if (head == null) {
+            return head;
+        }
+        Node curr = head;
+        while (curr != null) {
+            if (curr.child != null) {// if a node has a child
+            //flatten the child node by attaching then linearly to curr node
+                Node next = curr.next;// store curr.next for future
+                curr.next = flatten(curr.child);// recursion
+                curr.next.prev = curr;
+                curr.child = null;// now make its child null after flattening
+
+                while (curr.next != null) {// find the tail
+                    curr = curr.next;
+                }
+                if (next != null) {// then attach the tail to next
+                    curr.next = next;
+                    next.prev = curr;
+                }
+            }
+
+            curr = curr.next;
+        }
+        return head;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
