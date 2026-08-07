@@ -1112,6 +1112,17 @@ public class Q100 {
         }
         return remainingHead;// this becomes the new head
     }    
+
+//50. delete node in a linked list
+    public void deleteNode(ListNode node) {
+        ListNode prev = null;
+        while (node != null && node.next != null) {
+            node.val = node.next.val;
+            prev = node;
+            node = node.next;
+        }
+        prev.next = node.next;// delete the last duplicate node
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
