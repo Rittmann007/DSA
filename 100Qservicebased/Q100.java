@@ -1123,6 +1123,78 @@ public class Q100 {
         }
         prev.next = node.next;// delete the last duplicate node
     }    
+
+//51. odd even linked list
+    public ListNode oddEvenList(ListNode head) {
+        ListNode oddHead = new ListNode(-1);
+        ListNode evenHead = new ListNode(-1);
+        ListNode odd = oddHead;
+        ListNode even = evenHead;
+        ListNode temp = head;
+        int i = 1;
+        while(temp != null){
+            if(i%2 == 0){// for even
+                even.next = temp;
+                even = temp;
+            }else{// for odd
+                odd.next = temp;
+                odd = temp;
+            }
+            temp = temp.next;
+            i++;
+        }
+        even.next = null;
+        odd.next = evenHead.next;// attach even next to odd
+        return oddHead.next;
+    }    
+
+//52. merge k sorted lists
+    public ListNode merge(ListNode head1, ListNode head2) {
+        ListNode tempNode = new ListNode(-1);
+        ListNode temp = tempNode;
+        while (head1 != null && head2 != null) {
+            if (head1.val <= head2.val) {
+                temp.next = head1;
+                head1 = head1.next;
+                temp = temp.next;
+            } else {
+                temp.next = head2;
+                head2 = head2.next;
+                temp = temp.next;
+            }
+        }
+        while (head1 != null) {
+            temp.next = head1;
+            head1 = head1.next;
+            temp = temp.next;
+        }
+        while (head2 != null) {
+            temp.next = head2;
+            head2 = head2.next;
+            temp = temp.next;
+        }
+        return tempNode.next;
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        int last = lists.length - 1;
+        while (last != 0) {
+            int i = 0, j = last;
+            while (i < j) {
+                lists[i] = merge(lists[i], lists[j]);
+                i++;
+                j--;
+                if (i >= j)
+                    last = j;
+            }
+
+        }
+        return lists[0];
+
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
