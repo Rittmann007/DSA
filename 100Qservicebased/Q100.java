@@ -1317,6 +1317,53 @@ public class Q100 {
         }
         return result;
     }    
+
+//57. Largest rectangle in histogram
+    public int[] NextSmallerRight(int[] heights) {
+        int result[] = new int[heights.length];
+        Stack<Integer> s1 = new Stack<>();
+        for (int i = heights.length - 1; i >= 0; i--) {
+            while (!s1.isEmpty() && heights[i] <= heights[s1.peek()]) {
+                s1.pop();
+            }
+            if (s1.isEmpty()) {
+                result[i] = heights.length;
+            } else {
+                result[i] = s1.peek();
+            }
+            s1.push(i);
+        }
+        return result;
+    }
+
+    public int[] NextSmallerLeft(int[] heights) {
+        int result[] = new int[heights.length];
+        Stack<Integer> s1 = new Stack<>();
+        for (int i = 0; i < heights.length; i++) {
+            while (!s1.isEmpty() && heights[i] <= heights[s1.peek()]) {
+                s1.pop();
+            }
+            if (s1.isEmpty()) {
+                result[i] = -1;
+            } else {
+                result[i] = s1.peek();
+            }
+            s1.push(i);
+        }
+        return result;
+    }
+
+    public int largestRectangleArea(int[] heights) {
+        int right[] = NextSmallerRight(heights);// smallest in right
+        int left[] = NextSmallerLeft(heights);// smallest in left
+        int result = Integer.MIN_VALUE;
+        for (int i = 0; i < heights.length; i++) {
+            int height = heights[i];
+            int width = right[i] - left[i] - 1;
+            result = Math.max(result, (height * width));
+        }
+        return result;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
