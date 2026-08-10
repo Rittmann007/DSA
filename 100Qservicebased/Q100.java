@@ -1271,7 +1271,31 @@ public class Q100 {
         }
         return s1.peek();
     }
-}    
+}
+
+//55. next greater element I
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int result[] = new int[nums1.length];
+        HashMap<Integer,Integer> h1 = new HashMap<>();// to store num->next greater mapping
+        Stack<Integer> s1 = new Stack<>();
+
+        for(int i=nums2.length-1 ; i>=0 ; i--){
+            int num = nums2[i];
+            while(!s1.isEmpty() && num>=s1.peek()){
+                s1.pop();
+            }
+            if(s1.isEmpty()){
+                h1.put(num,-1);
+            }else{
+                h1.put(num,s1.peek());
+            }
+            s1.push(num);
+        }
+        for(int i = 0 ; i<nums1.length ; i++){// just fill the array according to mapping
+            result[i] = h1.get(nums1[i]);
+        }
+        return result;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
