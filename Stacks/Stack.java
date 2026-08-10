@@ -241,8 +241,8 @@ public class Stack {
             while (!s.isEmpty() && arr[i]<=arr[s.peek()]) {
                 s.pop();
             }
-            if (s.isEmpty()) { 
-                nextG[i] = arr.length-1;
+            if (s.isEmpty()) { // no smaller in left of this element
+                nextG[i] = -1;
             }
             else{  
                 nextG[i] = s.peek();
@@ -258,8 +258,8 @@ public class Stack {
             while (!s.isEmpty() && arr[i]<=arr[s.peek()]) {
                 s.pop();
             }
-            if (s.isEmpty()) { //no next greater exists
-                nextG[i] = arr.length-1;
+            if (s.isEmpty()) { //no smaller in right of this elemnt
+                nextG[i] = arr.length;
             }
             else{  
                 nextG[i] = s.peek();

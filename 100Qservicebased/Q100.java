@@ -1182,7 +1182,7 @@ public class Q100 {
         }
         int last = lists.length - 1;
         while (last != 0) {
-            int i = 0, j = last;
+            int i = 0, j = last;// divide & conqure merge with 2 pointers
             while (i < j) {
                 lists[i] = merge(lists[i], lists[j]);
                 i++;
@@ -1194,6 +1194,41 @@ public class Q100 {
         }
         return lists[0];
 
+    }
+
+//stack & queue
+//53. valid parenthesis
+    public boolean isPair(char a , char b){
+        if(a== '(' && b== ')'){
+            return true;
+        }else if(a=='{' && b== '}'){
+            return true;
+        }else if(a== '[' && b== ']'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean isValid(String s) {
+        Stack<Character> st = new Stack<>();
+        for(int i=0 ; i<s.length() ; i++){
+            char ch = s.charAt(i);
+            if(ch=='(' || ch=='{' || ch=='['){// if opening push
+                st.push(ch);
+            }else{
+            // if closing appears first or its not making pair    
+                if(st.isEmpty() || !isPair(st.peek(),ch)){
+                    return false;
+                }else{
+                    st.pop();
+                }
+            }
+        }
+        if(st.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
     }    
     
     public static void main(String[] args) {
