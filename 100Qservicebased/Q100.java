@@ -1418,6 +1418,30 @@ int peek(){
     return val;
 }
 }
+
+//59. Simplify Path
+    public String simplifyPath(String path) {
+        String arr[] = path.split("/");
+        Stack<String> s1 = new Stack<>();
+        for (String str : arr) {
+            if (!str.equals(".") && !str.equals("..") && !str.equals("")) {
+                s1.push(str);
+            } else if (!s1.isEmpty() && str.equals("..")) {
+
+                s1.pop();
+            }
+        }
+        if (s1.isEmpty()) {
+            return "/";
+        } else {
+            StringBuilder sp = new StringBuilder();
+            for (String str : s1) {
+                sp.append("/");
+                sp.append(str);
+            }
+            return sp.toString();
+        }
+    }
     
     public static void main(String[] args) {
         // Your code goes here
