@@ -1230,6 +1230,48 @@ public class Q100 {
             return false;
         }
     }    
+
+//54. Implement queue using stacks
+    class StackQueue{
+    java.util.Stack<Integer> s1 = new java.util.Stack<>();
+    java.util.Stack<Integer> s2 = new java.util.Stack<>();
+
+    boolean isEmpty(){
+        return s1.isEmpty();
+    }
+
+    void enqueue(int data){ // just enqueue takes O(n)
+        if (isEmpty()) {
+            s1.push(data);
+        }
+        else{
+            while (!s1.isEmpty()) {
+                s2.push(s1.pop());
+            }
+            s1.push(data);
+
+            while (!s2.isEmpty()) {
+                s1.push(s2.pop());
+            }
+        }
+    }
+
+    int dequeue(){
+        if (isEmpty()) {
+            System.out.println("queue is empty");
+            return -1;
+        }
+        return s1.pop();
+    }
+
+    int peek(){
+        if (isEmpty()) {
+            System.out.println("queue is empty");
+            return -1;
+        }
+        return s1.peek();
+    }
+}    
     
     public static void main(String[] args) {
         // Your code goes here
