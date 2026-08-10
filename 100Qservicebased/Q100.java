@@ -1364,6 +1364,60 @@ public class Q100 {
         }
         return result;
     }    
+
+//58. design circular queue
+    class ArrayCircularQueue {
+    int size;
+    int front = -1;
+    int rear = -1;
+    int arr[];
+
+ArrayCircularQueue(int n){
+    size = n;
+    arr = new int[size];
+}    
+
+boolean isEmpty(){
+    return (front == -1 && rear ==-1);
+}
+
+boolean isFull(){
+    return (rear+1)%size == front;
+}
+
+void enqueue(int val){
+    if (isFull()) {
+        System.out.println("queue is full");
+    }
+    if (front == -1) { // for 1st element push
+        front = 0;
+    }
+    rear = (rear+1)%size; // circular increment
+    arr[rear] = val;
+}
+
+int dequeue(){
+    if (isEmpty()) {
+        System.out.println("queue is empty");
+    }
+    int val = arr[front];
+    if (front == rear) {// for last element remove
+        front = rear = -1;
+    } else {
+        front = (front+1)%size;
+    }
+    return val;
+
+}
+
+int peek(){
+    if (isEmpty()) {
+        System.out.println("queue is empty");
+    }
+    int val = arr[front];
+    return val;
+}
+}
     
     public static void main(String[] args) {
         // Your code goes here
