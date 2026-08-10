@@ -1296,6 +1296,27 @@ public class Q100 {
         }
         return result;
     }
+
+//56. Next greater element II
+    public int[] nextGreaterElements(int[] nums) {
+        int result[] = new int[nums.length];
+        int N = nums.length; 
+        Stack<Integer> s1 = new Stack<>();
+        for(int i=(2*N)-1 ; i>=0 ; i--){
+            while(!s1.isEmpty() && nums[i%N]>=s1.peek()){
+                s1.pop();
+            }
+            if(i<N){// calculate result for original elements
+                if(s1.isEmpty()){
+                    result[i] = -1;
+                }else{
+                    result[i] = s1.peek();
+                }
+            }
+            s1.push(nums[i%N]);
+        }
+        return result;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
