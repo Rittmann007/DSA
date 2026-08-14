@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 
 import org.w3c.dom.Node;
@@ -1442,6 +1443,76 @@ int peek(){
             return sp.toString();
         }
     }
+
+//60. Implement stack using queues
+    class MyStack {
+    Queue<Integer> q1 = new LinkedList<>();
+    Queue<Integer> q2 = new LinkedList<>();
+
+    public MyStack() {
+
+    }
+
+    public void push(int x) {
+        if (!q1.isEmpty()) {
+            q1.add(x);
+        } else {
+            q2.add(x);
+        }
+    }
+
+    public int pop() {
+        if (empty()) {
+            return -1;
+        } else if (!q1.isEmpty()) {
+            int x = 0;
+            while (!q1.isEmpty()) {
+                int top = q1.remove();
+                if (q1.isEmpty()) {
+                    x = top;
+                    break;
+                }
+                q2.add(top);
+            }
+            return x;
+        } else {
+            int x = 0;
+            while (!q2.isEmpty()) {
+                int top = q2.remove();
+                if (q2.isEmpty()) {
+                    x = top;
+                    break;
+                }
+                q1.add(top);
+            }
+            return x;
+        }
+    }
+
+    public int top() {
+        if (empty()) {
+            return -1;
+        } else if (!q1.isEmpty()) {
+            int top = 0;
+            while (!q1.isEmpty()) {
+                top = q1.remove();
+                q2.add(top);
+            }
+            return top;
+        } else {
+            int top = 0;
+            while (!q2.isEmpty()) {
+                top = q2.remove();
+                q1.add(top);
+            }
+            return top;
+        }
+    }
+
+    public boolean empty() {
+        return q1.isEmpty() && q2.isEmpty();
+    }
+}    
     
     public static void main(String[] args) {
         // Your code goes here
