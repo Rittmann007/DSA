@@ -1446,11 +1446,12 @@ int peek(){
 
 //60. Implement stack using queues
     class MyStack {
-    Queue<Integer> q1 = new LinkedList<>();
-    Queue<Integer> q2 = new LinkedList<>();
+    Queue<Integer> q1;
+    Queue<Integer> q2;
 
     public MyStack() {
-
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
     }
 
     public void push(int x) {
@@ -1520,8 +1521,8 @@ int peek(){
     Stack<Integer> min;
 
     public MinStack() {
-        s1 = new Stack<>();
-        min = new Stack<>();
+        s1 = new Stack<>();//keeps track of all
+        min = new Stack<>();//keeps track of min vals
     }
 
     public void push(int value) {
@@ -1549,6 +1550,24 @@ int peek(){
         return min.isEmpty() ? -1 : min.peek();
     }
 }
+
+//62. daily temperatures
+    public int[] dailyTemperatures(int[] temperatures) {
+        int result[] = new int[temperatures.length];
+        Stack<Integer> s = new Stack<>();// stores indices
+        for (int i = temperatures.length - 1; i >= 0; i--) {
+            while (!s.isEmpty() && temperatures[i] >= temperatures[s.peek()]) {
+                s.pop();
+            }
+            if (s.isEmpty()) {
+                result[i] = 0;
+            } else {
+                result[i] = s.peek() - i;
+            }
+            s.push(i);
+        }
+        return result;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
