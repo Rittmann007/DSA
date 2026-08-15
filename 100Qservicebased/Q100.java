@@ -1513,6 +1513,42 @@ int peek(){
         return q1.isEmpty() && q2.isEmpty();
     }
 }    
+
+//61. min stack
+    class MinStack {
+    Stack<Integer> s1;
+    Stack<Integer> min;
+
+    public MinStack() {
+        s1 = new Stack<>();
+        min = new Stack<>();
+    }
+
+    public void push(int value) {
+        s1.push(value);
+        if (min.isEmpty() || value <= min.peek()) {
+            min.push(value);
+        }
+    }
+
+    public void pop() {
+        if (!s1.isEmpty()) {
+            int value = s1.pop();
+            if (!min.isEmpty() && value == min.peek()) {
+                min.pop();
+            }
+        }
+
+    }
+
+    public int top() {
+        return s1.isEmpty() ? -1 : s1.peek();
+    }
+
+    public int getMin() {
+        return min.isEmpty() ? -1 : min.peek();
+    }
+}
     
     public static void main(String[] args) {
         // Your code goes here
