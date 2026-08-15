@@ -1595,6 +1595,76 @@ int peek(){
         }
         return sk.peek();
     }    
+
+//64. LRU cache
+    class LRUCache {
+    public class Node {
+        int key, val;
+        Node prev, next;
+
+        Node(int key, int val) {
+            this.key = key;
+            this.val = val;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    Node head, tail;// using doubly Linked List and HashMap
+    int capacity;
+    HashMap<Integer, Node> h1 = new HashMap<>();
+
+    public LRUCache(int capacity) {
+        this.head = new Node(-1, -1);// most recent elements from head
+        this.tail = new Node(-1, -1);// least recent elements from tail
+        this.capacity = capacity;
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    public int get(int key) {
+        if (!h1.containsKey(key)) {
+            return -1;
+        } else {// get the value and remove and add to first
+            Node n1 = h1.get(key);
+            remove(n1);
+            addFirst(n1);// as this is now most recent
+            return n1.val;
+        }
+    }
+
+    public void put(int key, int value) {
+        if (h1.containsKey(key)) {// just update value wrt key
+            Node n1 = h1.get(key);
+            n1.val = value;
+            remove(n1);
+            addFirst(n1);
+
+        } else {
+            if (h1.size() == capacity) {// if full
+                Node n = tail.prev;
+                remove(n);// remove least recent from tail
+                h1.remove(n.key);
+            }
+            Node n1 = new Node(key, value);
+            h1.put(key, n1);// add new node after head
+            addFirst(n1);
+        }
+    }
+
+    private void remove(Node n1) {// utility funcs
+        n1.prev.next = n1.next;
+        n1.next.prev = n1.prev;
+    }
+
+    private void addFirst(Node n1) {
+        Node next = head.next;
+        head.next = n1;
+        n1.prev = head;
+        n1.next = next;
+        next.prev = n1;
+    }
+}    
     
     public static void main(String[] args) {
         // Your code goes here
