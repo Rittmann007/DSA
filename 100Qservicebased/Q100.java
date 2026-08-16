@@ -1665,6 +1665,24 @@ int peek(){
         next.prev = n1;
     }
 }    
+
+//65. Minimum Add to Make Parentheses Valid
+    public int minAddToMakeValid(String s) {
+        Stack<Character> st = new Stack<>();
+        for (char ch : s.toCharArray()) {
+            if (ch == '(') {
+                st.push(ch);
+            } else {
+                if (!st.isEmpty() && st.peek() == '(') {// is opening,closing matches
+                    st.pop();
+                } else {// else push
+                    st.push(ch);
+                }
+
+            }
+        }
+        return st.size();
+    }
     
     public static void main(String[] args) {
         // Your code goes here
