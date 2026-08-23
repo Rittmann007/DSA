@@ -94,8 +94,9 @@ public class Backtrack {
         return total;
     }   
 
-// sudoku solver
-// in sudoku we can place same digit in same row,coloumn,subgrid (here we try to find one valid sol thats why returning boolean)
+// sudoku solver(9X9 grid , inside 9 (3x3) grid)
+// in sudoku if we place some digit, in will be appearing once in its row,coloumn,subgrid
+//  (here we try to find one valid sol thats why returning boolean)
     public static boolean isSafeSudoku(int arr[][],int row,int col,int digit) {
         for (int i = 0; i < 9; i++) { // horizontal
            if (arr[row][i] == digit) {

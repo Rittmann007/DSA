@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Tdarray {
-
+// spirally print the elements of a 2D matrix
     public static void spiralMatrix(int M[][]) {
         int Sr = 0; // starting row
         int Sc = 0; // starting coloumn
@@ -40,7 +40,7 @@ public class Tdarray {
         }
     }
 
-// sum of both diagonals(sum of each one of them too)
+// sum of both diagonals(sum of each one of them too can come)
 
     public static void DiagonalSum(int M[][]) {
         int sum = 0;

@@ -93,7 +93,7 @@ public class Q100 {
 
 //7. maxsum of the subarrays with kadane's algo(whenever in the way our final sum
 // is -ve, make the sum 0)(this will take special care for all -ve numbers)
-
+// Patched Reset-to-0 Kadane
     public static void subarraysum3(int arr[]) {
         int curr = 0;
         int max = Integer.MIN_VALUE;
@@ -120,6 +120,36 @@ public class Q100 {
         }
         System.out.println("max sum is" + max);
 
+    }    
+// Start a new subarray at the current element (i), or
+// Extend the previous subarray (curr + i).
+    public int maxSubArray(int[] nums) {// real kadane
+        int result = Integer.MIN_VALUE;
+        int curr = 0;
+        for(int i:nums){
+            curr = Math.max(i,curr+i);//curr is greater or curr elm
+            result = Math.max(result,curr);
+        }
+        return result;
+    }
+// Maximum Sum Circular Subarray(similar but in a circular array)
+// if circularly we get maxsum then it is (totalsumOfArray - minSumOfSubArray)
+    public int maxSubarraySumCircular(int[] nums) {
+        int maxsum = Integer.MIN_VALUE;
+        int minsum = Integer.MAX_VALUE;
+        int maxcurr = 0;
+        int mincurr = 0;
+        int total = 0;
+        for (int i : nums) {//calculate min and max sum
+            maxcurr = Math.max(i, maxcurr + i);
+            maxsum = Math.max(maxsum, maxcurr);
+
+            mincurr = Math.min(i, mincurr + i);
+            minsum = Math.min(minsum, mincurr);
+
+            total += i;
+        }// see which is more normal maxsum or circular maxsum
+        return maxsum < 0 ? maxsum /**(all -ve edge case handle)**/ : Math.max(maxsum, (total - minsum));
     }    
 
 //8. two sum
@@ -1683,6 +1713,26 @@ int peek(){
         }
         return st.size();
     }
+
+// Recursion & Backtracking
+//66. Subsets
+    public void subset(int nums[], List<List<Integer>> arr, List<Integer> al, int i) {
+        if (i == nums.length) {
+            arr.add(new ArrayList<>(al));
+            return;
+        }
+        al.add(nums[i]);//returns true if success,so not passed directly
+        subset(nums, arr, al, i + 1);// add
+        al.remove(al.size() - 1);// backtrack because arraylist uses one copy for every recursive call ,not like strings
+        subset(nums, arr, al, i + 1);// not add
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {// done all these because of ans in list
+        List<List<Integer>> arr = new ArrayList<>();// contains our final ans
+        List<Integer> al = new ArrayList<>();// stores intermediate subsets
+        subset(nums, arr, al, 0);// auxiliary func
+        return arr;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
