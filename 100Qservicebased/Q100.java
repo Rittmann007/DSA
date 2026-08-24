@@ -1746,7 +1746,7 @@ int peek(){
     public void subset(int nums[], List<List<Integer>> arr, List<Integer> al, int start) {
         arr.add(new ArrayList<>(al));
         for (int i = start; i < nums.length; i++) {// i==nums.length loop wouldn't run and return(implicit base case)
-            if (i > start && nums[i] == nums[i - 1])// filtering duplicate elements
+            if (i > start && nums[i] == nums[i - 1])// filtering duplicate elements,loop helps in it
                 continue;
             al.add(nums[i]);
             subset(nums, arr, al, i + 1);// add
@@ -1760,6 +1760,31 @@ int peek(){
         List<Integer> al = new ArrayList<>();
         Arrays.sort(nums);// sorting is required to find duplicates
         subset(nums, arr, al, 0);
+        return arr;
+    }    
+
+//68. permutaions
+    public void recursion(List<Integer> listnums, List<List<Integer>> arr, List<Integer> al) {
+        if (listnums.size() == 0) {
+            arr.add(new ArrayList<>(al));
+            return;
+        }
+        for (int i = 0; i < listnums.size(); i++) {
+            List<Integer> newList = new ArrayList<>(listnums);//use newlist for removing element
+            int val = newList.remove(i);
+            al.add(val);
+            recursion(newList, arr, al);// recurse
+            al.remove(al.size() - 1);// backtrack
+        }
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> arr = new ArrayList<>();
+        List<Integer> listnums = new ArrayList<>();
+        for (int i : nums) {
+            listnums.add(i);
+        }
+        recursion(listnums, arr, new ArrayList<>());
         return arr;
     }    
     
