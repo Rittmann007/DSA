@@ -1726,11 +1726,40 @@ int peek(){
         al.remove(al.size() - 1);// backtrack because arraylist uses one copy for every recursive call ,not like strings
         subset(nums, arr, al, i + 1);// not add
     }
-
+    //  public void subset(int nums[], List<List<Integer>> arr, List<Integer> al, int start) {
+    //     arr.add(new ArrayList<>(al));
+    //     for (int i = start; i < nums.length; i++) {
+    //         al.add(nums[i]);// for this problem above is enough,but this is more efficient
+    //         subset(nums, arr, al, i + 1);
+    //         al.remove(al.size() - 1);
+    //     }
+    // }
     public List<List<Integer>> subsets(int[] nums) {// done all these because of ans in list
         List<List<Integer>> arr = new ArrayList<>();// contains our final ans
         List<Integer> al = new ArrayList<>();// stores intermediate subsets
         subset(nums, arr, al, 0);// auxiliary func
+        return arr;
+    }    
+
+//67. Subsets II(includes duplicate elements in array)
+// can filter redundant elements after sorting with hashsets,but this is more efficient
+    public void subset(int nums[], List<List<Integer>> arr, List<Integer> al, int start) {
+        arr.add(new ArrayList<>(al));
+        for (int i = start; i < nums.length; i++) {// i==nums.length loop wouldn't run and return(implicit base case)
+            if (i > start && nums[i] == nums[i - 1])// filtering duplicate elements
+                continue;
+            al.add(nums[i]);
+            subset(nums, arr, al, i + 1);// add
+            al.remove(al.size() - 1);// backtrack
+            // explicit dont add branch is not given loop handles that
+        }
+
+    }
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> arr = new ArrayList<>();
+        List<Integer> al = new ArrayList<>();
+        Arrays.sort(nums);// sorting is required to find duplicates
+        subset(nums, arr, al, 0);
         return arr;
     }    
     
