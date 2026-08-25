@@ -1839,6 +1839,31 @@ int peek(){
         backtrack(Listarr, arr, 0, n);
         return Listarr;
     }    
+
+//70. unique paths (just like grid ways)
+    public int backtrack(int i, int j, int m, int n, int grid[][]) {
+        if (i == (m - 1) && j == (n - 1)) {
+            return 1;
+        }
+        if ((i >= m || j >= n)) {
+            return 0;
+        }
+        if (grid[i][j] != -1) {//so we wont recompute
+            return grid[i][j];
+        }
+        grid[i][j] = backtrack(i + 1, j, m, n, grid) + backtrack(i, j + 1, m, n, grid);
+        return grid[i][j];
+    }
+
+    public int uniquePaths(int m, int n) {
+        int grid[][] = new int[m][n];// normally exponential time complexity
+        for (int i = 0; i < m; i++) {// but here we make grid to store intermediate results
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = -1;
+            }
+        }
+        return backtrack(0, 0, m, n, grid);
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
