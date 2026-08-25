@@ -1854,7 +1854,6 @@ int peek(){
         grid[i][j] = backtrack(i + 1, j, m, n, grid) + backtrack(i, j + 1, m, n, grid);
         return grid[i][j];
     }
-
     public int uniquePaths(int m, int n) {
         int grid[][] = new int[m][n];// normally exponential time complexity
         for (int i = 0; i < m; i++) {// but here we make grid to store intermediate results
@@ -1864,6 +1863,32 @@ int peek(){
         }
         return backtrack(0, 0, m, n, grid);
     }    
+
+//71. unique paths II( like rat in a maze )
+    public int backtrack(int i, int j, int m, int n, int obstacleGrid[][], int grid[][]) {
+        if ((i >= m || j >= n) || (obstacleGrid[i][j] == 1)) {
+            return 0;
+        }
+        if (i == (m - 1) && j == (n - 1)) {
+            return 1;
+        }
+        if (grid[i][j] != -1) {// if we use the same given array, in obstacle 1, cant tell if its a stored val or not
+            return grid[i][j];
+        }
+        grid[i][j] = backtrack(i + 1, j, m, n, obstacleGrid, grid) + backtrack(i, j + 1, m, n, obstacleGrid, grid);
+        return grid[i][j];
+    }
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        int grid[][] = new int[m][n];// normally exponential time complexity
+        for (int i = 0; i < m; i++) {// but here we make grid to store intermediate results
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = -1;
+            }
+        }
+        return backtrack(0, 0, m, n, obstacleGrid, grid);
+    }
     
     public static void main(String[] args) {
         // Your code goes here
