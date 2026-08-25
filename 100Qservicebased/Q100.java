@@ -1763,7 +1763,7 @@ int peek(){
         return arr;
     }    
 
-//68. permutaions
+//68. permutations/ also permutationsII which follows same modificaton from subsetsII
     public void recursion(List<Integer> listnums, List<List<Integer>> arr, List<Integer> al) {
         if (listnums.size() == 0) {
             arr.add(new ArrayList<>(al));
@@ -1777,7 +1777,6 @@ int peek(){
             al.remove(al.size() - 1);// backtrack
         }
     }
-
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> arr = new ArrayList<>();
         List<Integer> listnums = new ArrayList<>();
@@ -1786,6 +1785,59 @@ int peek(){
         }
         recursion(listnums, arr, new ArrayList<>());
         return arr;
+    }    
+
+//69. N-Queens
+    public boolean isSafe(char arr[][], int row, int col) {
+        //vertically up
+        for (int i = row - 1; i >= 0; i--) {
+            if (arr[i][col] == 'Q')
+                return false;
+        }
+        // left diagonal
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (arr[i][j] == 'Q')
+                return false;
+        }
+        // right diagonal
+        for (int i = row - 1, j = col + 1; i >= 0 && j < arr[0].length; i--, j++) {
+            if (arr[i][j] == 'Q')
+                return false;
+        }
+
+        return true;
+    }
+    public void backtrack(List<List<String>> Listarr, char arr[][], int row, int n) {
+        if (row == n) {
+            List<String> temp = new ArrayList<>();
+            for (int i = 0; i < arr.length; i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < arr[0].length; j++) {
+                    sb.append(arr[i][j]);
+                }
+                temp.add(sb.toString());
+            }
+            Listarr.add(temp);// copy the array chessboard to list chessboard
+            return;
+        }
+        for (int i = 0; i < n; i++) {// traversing each col
+            if (isSafe(arr, row, i)) {
+                arr[row][i] = 'Q';// add
+                backtrack(Listarr, arr, row + 1, n);//recurse to next row
+                arr[row][i] = '.';// backtrack
+            }
+        }
+    }
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> Listarr = new ArrayList<>();
+        char arr[][] = new char[n][n];// make char array chessboard to easily work on
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = '.';
+            }
+        }
+        backtrack(Listarr, arr, 0, n);
+        return Listarr;
     }    
     
     public static void main(String[] args) {
