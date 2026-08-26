@@ -1920,6 +1920,64 @@ int peek(){
         }
         return false;
     }    
+
+//73. sudoku solver
+    public boolean isSafe(char board[][], int row, int col, int num) {
+        //same row
+        for (int i = 0; i < board[0].length; i++) {
+            if (board[row][i] == (char) (num + '0')) {
+                return false;
+            }
+        }
+        //same col
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][col] == (char) (num + '0')) {
+                return false;
+            }
+        }
+        //same subgrid
+        int srow = (row / 3) * 3;// formula
+        int scol = (col / 3) * 3;
+
+        for (int i = srow; i < srow + 3; i++) {
+            for (int j = scol; j < scol + 3; j++) {
+                if (board[i][j] == (char) (num + '0')) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static boolean sudoku(char arr[][],int row,int col) {
+        //base case
+        if (row == 9) {
+            return true;
+        }
+
+        //work
+        int nextrow = row; int nextcol = col+1;// calculating next row & col
+        if (nextcol==9) {
+           nextrow += 1;
+           nextcol = 0; 
+        }
+        if (arr[row][col]!='.') { // if a digit already placed
+            return sudoku(arr, nextrow, nextcol); // move next
+        }
+        for (int i = 1; i <=9 ; i++) { // try all digits in a particular position
+            if (isSafeSudoku(arr,row,col,i)) {
+                arr[row][col] = (char) (j + '0');// number to corresponding char
+                if (sudoku(arr, nextrow, nextcol)) { // returning success if valid digit found
+                    return true;
+                }
+                arr[row][col]='.'; //backtracking step
+            } 
+        }
+
+        return false; // for any iteration if no valid digit found for position of this iteration
+    }
+    public void solveSudoku(char[][] board) {
+        sudoku(board, 0, 0);
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
