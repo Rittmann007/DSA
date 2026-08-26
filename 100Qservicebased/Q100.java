@@ -1998,6 +1998,17 @@ int peek(){
         combination(l1, digits, new StringBuilder(""), arr, 0);
         return l1;
     }    
+
+//75. tower of hanoi problem
+    public static void ToH(int n,String source,String helper,String destination) {
+        if (n == 1) {
+            System.out.println("transfer "+n+" from "+source+" to "+destination);
+            return;
+        }
+        ToH(n-1, source, destination, helper);
+        System.out.println("transfer "+n+" from "+source+" to "+destination);
+        ToH(n-1, helper, source, destination);
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
