@@ -1978,6 +1978,26 @@ int peek(){
     public void solveSudoku(char[][] board) {
         sudoku(board, 0, 0);
     }    
+
+//74. letter combinations of a phone number
+    public void combination(List<String> l1, String digits, StringBuilder ans, String arr[], int i) {
+        if (i == digits.length()) {
+            l1.add(ans.toString());
+            return;
+        }
+        String mappedString = arr[((digits.charAt(i) - '0') - 1)];
+        for (int j = 0; j < mappedString.length(); j++) {// traverse through each choice
+            ans = ans.append(mappedString.charAt(j));
+            combination(l1, digits, ans, arr, i + 1);
+            ans.deleteCharAt(ans.length() - 1);// taken stringBuilder, so backtracking
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String> l1 = new ArrayList<>();
+        String arr[] = { "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+        combination(l1, digits, new StringBuilder(""), arr, 0);
+        return l1;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
