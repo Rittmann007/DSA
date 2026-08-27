@@ -1987,7 +1987,7 @@ int peek(){
         }
         String mappedString = arr[((digits.charAt(i) - '0') - 1)];
         for (int j = 0; j < mappedString.length(); j++) {// traverse through each choice
-            ans = ans.append(mappedString.charAt(j));
+            ans.append(mappedString.charAt(j));
             combination(l1, digits, ans, arr, i + 1);
             ans.deleteCharAt(ans.length() - 1);// taken stringBuilder, so backtracking
         }
@@ -2009,6 +2009,51 @@ int peek(){
         System.out.println("transfer "+n+" from "+source+" to "+destination);
         ToH(n-1, helper, source, destination);
     }    
+
+//76. combination sum
+    public void backtrack(int candidates[], int target, int i, List<Integer> ans, HashSet<List<Integer>> s1) {
+        if (target == 0) {// this sol, is not that efficient, just for core understanding
+            s1.add(new ArrayList<>(ans));
+            return;
+        }
+        if (i == candidates.length || target < 0)// target is always > 0
+            return;
+
+        ans.add(candidates[i]);// 3 choice for each number
+        backtrack(candidates, target - candidates[i], i + 1, ans, s1);//add it in our ans and move to next
+        backtrack(candidates, target - candidates[i], i, ans, s1);//add it ,but again do the same
+        ans.remove(ans.size() - 1);
+        backtrack(candidates, target, i + 1, ans, s1);//ignore it, move next
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> arr = new ArrayList<>();
+        HashSet<List<Integer>> s1 = new HashSet<>();// in this,multiple sets of same ans can appear
+        backtrack(candidates, target, 0, new ArrayList<>(), s1);// so using hashset
+        for(List<Integer> val : s1){
+            arr.add(val);
+        }
+        return arr;
+    }
+    public void backtrack(int candidates[], int target, int start, List<Integer> ans, List<List<Integer>> arr) {
+        if (target == 0) {// this one is a efficient sol
+            arr.add(new ArrayList<>(ans));
+            return;
+        }
+        if (start == candidates.length || target < 0)
+            return;
+
+        for (int i = start; i < candidates.length; i++) {// this loop reflects our 3 choices implicitly
+            ans.add(candidates[i]);
+            backtrack(candidates, target - candidates[i], i, ans, arr);
+            ans.remove(ans.size() - 1);
+
+        }
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> arr = new ArrayList<>();// this one doesn't need a hashset at all
+        backtrack(candidates, target, 0, new ArrayList<>(), arr);
+        return arr;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
