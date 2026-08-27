@@ -2039,7 +2039,7 @@ int peek(){
             arr.add(new ArrayList<>(ans));
             return;
         }
-        if (start == candidates.length || target < 0)
+        if (target < 0)
             return;
 
         for (int i = start; i < candidates.length; i++) {// this loop reflects our 3 choices implicitly
@@ -2054,6 +2054,30 @@ int peek(){
         backtrack(candidates, target, 0, new ArrayList<>(), arr);
         return arr;
     }
+
+//77. combination sum II( no reuse allowed of same numbers )
+    public void backtrack(int candidates[], int target, int start, List<Integer> ans, List<List<Integer>> arr) {
+        if (target == 0) {
+            arr.add(new ArrayList<>(ans));
+            return;
+        }
+        if (target < 0)
+            return;
+
+        for (int i = start; i < candidates.length; i++) {
+            if (i > start && candidates[i] == candidates[i - 1])// skip duplicate inputs
+                continue;
+            ans.add(candidates[i]);
+            backtrack(candidates, target - candidates[i], i + 1, ans, arr);// only i+1, no reuse allowed
+            ans.remove(ans.size() - 1);
+        }
+    }
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);// duplicate inputs appear, sort the array
+        List<List<Integer>> arr = new ArrayList<>();
+        backtrack(candidates, target, 0, new ArrayList<>(), arr);
+        return arr;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
