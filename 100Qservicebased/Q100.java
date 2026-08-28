@@ -2078,6 +2078,28 @@ int peek(){
         backtrack(candidates, target, 0, new ArrayList<>(), arr);
         return arr;
     }    
+
+//78. combination sum III(similar conditions as above + candidates are from 1-9,each ans is of size k)
+    public void backtrack(int candidates[], int k, int target, int start, List<Integer> ans, List<List<Integer>> arr) {
+        if (target == 0 && ans.size() == k) {// ans is of size k
+            arr.add(new ArrayList<>(ans));
+            return;
+        }
+        if (target < 0)
+            return;
+
+        for (int i = start; i < candidates.length; i++) {
+            ans.add(candidates[i]);
+            backtrack(candidates, k, target - candidates[i], i + 1, ans, arr);// only i+1, no reuse allowed
+            ans.remove(ans.size() - 1);
+        }
+    }
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        int candidates[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        List<List<Integer>> arr = new ArrayList<>();
+        backtrack(candidates, k, n, 0, new ArrayList<>(), arr);
+        return arr;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
