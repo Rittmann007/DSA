@@ -2100,6 +2100,36 @@ int peek(){
         backtrack(candidates, k, n, 0, new ArrayList<>(), arr);
         return arr;
     }    
+
+//79. restore ip addresses
+    public boolean isValid(String str) {
+        if (str.charAt(0) == '0')// no leading zeros
+            return false;
+        if (Integer.parseInt(str) > 255)// num between dots should be < 255
+            return false;
+
+        return true;
+    }//     its a fairly inefficient sol, but others are too complicated
+    public void recursion(List<String> result, String s, int parts, String ans, int i) {
+         if (parts == 4 && i >= s.length()) {// 4 parts in a ip address and input string should be completely traversed
+            result.add(new String(ans.substring(0, ans.length() - 1)));
+            return;
+        }
+        // 3 choices
+        if (i + 1 <= s.length())// if its going out of bounds
+            recursion(result, s, parts + 1, ans + s.charAt(i) + ".", i + 1);// take 1 digit from i
+
+        if (i + 2 <= s.length() && isValid(s.substring(i, i + 2)))
+            recursion(result, s, parts + 1, ans + s.substring(i, i + 2) + ".", i + 2);// take 2
+
+        if (i + 3 <= s.length() && isValid(s.substring(i, i + 3)))
+            recursion(result, s, parts + 1, ans + s.substring(i, i + 3) + ".", i + 3);// take 3
+    }
+    public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<>();
+        recursion(result, s, 0, "", 0);
+        return result;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
