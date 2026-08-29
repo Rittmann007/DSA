@@ -2153,7 +2153,7 @@ int peek(){
         return recursion(nums, target, 0);// the question reduces to if any subsetsum==target exists in the array
     }    
 
-//81. partiiton to k equal sum subsets
+//81. partiiton to k equal sum subsets(similar to above but, k equal sum subsets)
     public boolean backtrack(int nums[],int k,int bucketnum,int bucketsum,int target,int i,boolean visited[]){
         if(bucketnum == k){// all buckets are filled
             return true;
@@ -2185,7 +2185,27 @@ int peek(){
         int target = sum / k;// here instead of giving each num a choice to get into diff buckets
         // we are giving each bucket a choice to include each num
         return backtrack(nums, k, 0, 0, target, 0, new boolean[nums.length]);
-    }    
+    }  
+
+//81. flood fill
+    public void recursion(int[][] image, int sr, int sc, int color, boolean visited[][], int originalColor) {
+        if ((sr < 0 || sc < 0) || (sr >= image.length || sc >= image[0].length)//out of bounds
+             || (image[sr][sc]) != originalColor || (visited[sr][sc] == true)) {//already visited or diff color appears
+            return;
+        }
+
+        visited[sr][sc] = true;// so that we dont visit the same pixel again
+        image[sr][sc] = color;
+
+        recursion(image, sr + 1, sc, color, visited, originalColor);
+        recursion(image, sr - 1, sc, color, visited, originalColor);
+        recursion(image, sr, sc - 1, color, visited, originalColor);
+        recursion(image, sr, sc + 1, color, visited, originalColor);
+    }
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        recursion(image, sr, sc, color, new boolean[image.length][image[0].length], image[sr][sc]);
+        return image;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
