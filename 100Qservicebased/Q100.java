@@ -2129,6 +2129,62 @@ int peek(){
         List<String> result = new ArrayList<>();
         recursion(result, s, 0, "", 0);
         return result;
+    }  
+
+//80. partition equal subset sum(though its a dp question, doing it in recursion)(similar to combination sum)
+    public boolean recursion(int nums[], int target, int i) {
+        if (target == 0) {
+            return true;
+        }
+        if (i >= nums.length || target < 0)
+            return false;
+
+        boolean include = recursion(nums, target - nums[i], i + 1);
+        boolean exclude = recursion(nums, target, i + 1);
+        return include || exclude;
+    }
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for (int i : nums)
+            sum += i;
+        if ((sum % 2) != 0)// if sum is odd, then we can never break the array in two subsets
+            return false;
+        int target = sum / 2;
+        return recursion(nums, target, 0);// the question reduces to if any subsetsum==target exists in the array
+    }    
+
+//81. partiiton to k equal sum subsets
+    public boolean backtrack(int nums[],int k,int bucketnum,int bucketsum,int target,int i,boolean visited[]){
+        if(bucketnum == k){// all buckets are filled
+            return true;
+        }
+        if(bucketsum == target){// if a bucket is filled, move to next
+          return backtrack(nums,k,bucketnum+1,0,target,0,visited);
+        }
+        if(bucketsum>target || i>=nums.length){
+            return false;
+        }
+       if(visited[i] == true){// one num can't be part of morethan one bucket
+       return backtrack(nums,k,bucketnum,bucketsum,target,i+1,visited);// goto next elemnt
+       }else{
+        visited[i] = true;
+        bucketsum+=nums[i];
+        boolean add = backtrack(nums,k,bucketnum,bucketsum,target,i+1,visited);//add elemnt in bucketandMoveNext
+
+        visited[i] = false;// backtrack
+        bucketsum-=nums[i];
+        boolean dontadd = backtrack(nums,k,bucketnum,bucketsum,target,i+1,visited);//skip and MoveNext
+
+        return add||dontadd;
+       }
+    }
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int sum = 0;
+        for (int i : nums) sum += i;
+        if (sum % k != 0) return false;
+        int target = sum / k;// here instead of giving each num a choice to get into diff buckets
+        // we are giving each bucket a choice to include each num
+        return backtrack(nums, k, 0, 0, target, 0, new boolean[nums.length]);
     }    
     
     public static void main(String[] args) {
