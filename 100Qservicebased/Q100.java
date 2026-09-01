@@ -2206,6 +2206,35 @@ int peek(){
         recursion(image, sr, sc, color, new boolean[image.length][image[0].length], image[sr][sc]);
         return image;
     }
+
+//82. palindrome partitioning
+    public boolean isPalindrome(String str) {
+        for (int i = 0, j = str.length() - 1; i <= j; i++, j--) {
+            if (str.charAt(i) != str.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void backtrack(String s, List<List<String>> arr, List<String> ans) {
+        if (s.length() == 0) {// if 2nd halve is empty
+            arr.add(new ArrayList<>(ans));
+            return;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            String sub = s.substring(0, i + 1);
+            if (isPalindrome(sub)) {// if the 1st halve is a palindrome
+                ans.add(sub);
+                backtrack(s.substring(i + 1), arr, ans);// and recurse with the 2nd halve
+                ans.remove(ans.size() - 1);
+            }
+        }
+    }
+    public List<List<String>> partition(String s) {
+        List<List<String>> arr = new ArrayList<>();
+        backtrack(s, arr, new ArrayList<>());
+        return arr;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
