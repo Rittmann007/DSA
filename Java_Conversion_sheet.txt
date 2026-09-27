@@ -1,0 +1,64 @@
+========================
+Java Conversion Cheat Sheet
+========================
+
+CHAR ↔ NUMBER
+-------------
+Alphabet char → index:
+    int num = ch - 'a';   // 'a'→0
+    int num = ch - 'A';   // 'A'→0
+
+Digit char → int:
+    int num = ch - '0';   // '5'→5
+    int num = Character.getNumericValue(ch);
+
+Char → ASCII/Unicode:
+    int code = (int) ch;  // 'A'→65
+
+ASCII/Unicode → char:
+    char ch = (char) code; // 65→'A'
+
+NUMBER ↔ CHAR
+-------------
+Int → digit char:
+    char ch = (char)(num + '0');   // 5→'5'
+
+Int → alphabet char:
+    char ch = (char)(num + 'a');   // 0→'a'
+    char ch = (char)(num + 'A');   // 0→'A'
+
+STRING ↔ NUMBER
+---------------
+String → int/long/double/float:
+    int num = Integer.parseInt(str);
+    long l = Long.parseLong(str);
+    double d = Double.parseDouble(str);
+    float f = Float.parseFloat(str);
+
+Wrapper alternative:
+    Integer num = Integer.valueOf(str);
+    Double d = Double.valueOf(str);
+
+Number → String:
+    String s = String.valueOf(num);
+    String s = Integer.toString(num);
+    String s = Double.toString(d);
+
+STRING ↔ CHAR ARRAY
+-------------------
+String → char[]:
+    char[] arr = str.toCharArray();
+
+char[] → String:
+    String s = new String(arr);
+
+WRAPPER UTILITIES
+-----------------
+Character.isDigit(ch);   // true if '0'–'9'
+Character.isLetter(ch);  // true if 'a'–'z' or 'A'–'Z'
+Character.toUpperCase(ch);
+Character.toLowerCase(ch);
+
+Parse with radix:
+    int num = Integer.parseInt(str, 16); // hex
+    int num = Integer.parseInt(str, 2);  // binary
