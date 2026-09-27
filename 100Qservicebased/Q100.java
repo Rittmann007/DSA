@@ -45,7 +45,7 @@ public class Q100 {
         return x+1;
     }
     
-//3. remove duplicates from sorted array II
+//3. remove duplicates from sorted array II(each unique element appears atmost twice)
     public int removeDuplicates2(int[] nums) {
         int n = nums.length;
         if(n<=2) return n;// check if 2nd idx exists
@@ -148,7 +148,7 @@ public class Q100 {
             minsum = Math.min(minsum, mincurr);
 
             total += i;
-        }// see which is more normal maxsum or circular maxsum
+        }// see which is more, normal maxsum or circular maxsum
         return maxsum < 0 ? maxsum /**(all -ve edge case handle)**/ : Math.max(maxsum, (total - minsum));
     }    
 
