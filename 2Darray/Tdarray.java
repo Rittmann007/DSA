@@ -110,14 +110,14 @@ public static void SearchM(int M[][] , int key) {
 
     //     int result[][] = new int[col][row];
 
-    //     for (int i = 0; i < M.length; i++) {
-    //         for (int j = 0; j < M[0].length; j++) {
+    //     for (int i = 0; i < row; i++) {
+    //         for (int j = 0; j < col; j++) {
     //             result[j][i] = M[i][j];    // main condition
     //         }
     //     }
     //     return result;
     // }    
-// inplace method
+// inplace method (only works with square matrices)
 // 1  2  3        1  4  7 (as you can see left(main) diagonal remains same)
 // 4  5  6   ->   2  5  8 (just elemnts in two sides of the diagonal have swapped places[2,3][3,7][6,8])
 // 7  8  9        3  6  9

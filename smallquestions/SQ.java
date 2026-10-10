@@ -290,7 +290,7 @@ public class SQ {
                 common.add(i);
             }
         }
-
+         // use a loop to copy the common elemnts to an array
         System.out.println(common.isEmpty()?"false":common);
     }
 
@@ -299,7 +299,7 @@ public class SQ {
     // binary search
     public static void binary(int arr[],int target) {
         int low = 0 ,high = arr.length-1;
-        while (low<high) {
+        while (low<=high) {
             int mid = low+(high-low)/2;
             if (arr[mid] == target) {
                 System.out.println("found at:"+mid+"index");
@@ -312,8 +312,6 @@ public class SQ {
         }
         System.out.println("not found");
     }
-
-    // merge,quick ,2d array
 
     // merge sort
     public static void merge(int arr[],int low,int mid,int high) {
@@ -396,11 +394,12 @@ public class SQ {
     
     public static void main(String[] args) {
         // Your code goes here
-        System.out.println("Hello, world!");
-        int arr[]= {1,2,3,7,4,5,6};
-        quickSort(arr, 0, arr.length-1);
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i]+" ");
-        }
+        // System.out.println("Hello, world!");
+        // int arr[]= {1,2,3,7,4,5,6};
+        // quickSort(arr, 0, arr.length-1);
+        // for (int i = 0; i < arr.length; i++) {
+        //     System.out.print(arr[i]+" ");
+        // }
+        numR(1223);
     }
 }

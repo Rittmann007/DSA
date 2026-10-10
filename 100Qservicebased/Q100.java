@@ -2235,6 +2235,25 @@ int peek(){
         backtrack(s, arr, new ArrayList<>());
         return arr;
     }    
+
+// HashMap and sets
+//83. continuous subarray sum
+    public boolean checkSubarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> h1 = new HashMap<>();
+        int sum = 0;
+        h1.put(0, -1);// if subarray starts at first idx
+        for (int i = 0; i < nums.length; i++) {
+            sum = (sum + nums[i]) % k;
+            if (h1.containsKey(sum)) {
+                if (i - h1.get(sum) >= 2) {// length > 1
+                    return true;
+                }
+            } else {
+                h1.put(sum, i);
+            }
+        }
+        return false;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
