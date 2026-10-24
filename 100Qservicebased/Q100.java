@@ -2241,7 +2241,7 @@ int peek(){
     public boolean checkSubarraySum(int[] nums, int k) {
         HashMap<Integer, Integer> h1 = new HashMap<>();
         int sum = 0;
-        h1.put(0, -1);// if subarray starts at first idx
+        h1.put(0, -1);// if subarray starts at first idx(if we store its idx as 0)
         for (int i = 0; i < nums.length; i++) {
             sum = (sum + nums[i]) % k;
             if (h1.containsKey(sum)) {
@@ -2249,10 +2249,30 @@ int peek(){
                     return true;
                 }
             } else {
-                h1.put(sum, i);
+                h1.put(sum, i);//(then we have to put i+1 as value)
             }
         }
         return false;
+    }    
+
+//84. contiguous array
+    public int findMaxLength(int[] nums) {
+        HashMap<Integer, Integer> h1 = new HashMap<>();
+        int result = 0;
+        int sum = 0;
+        h1.put(0, -1);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0)//when 0 comes, behave like it's -1
+                sum--;
+            else
+                sum++;
+            if (h1.containsKey(sum)) {
+                result = Math.max(result, i - h1.get(sum));
+            } else {
+                h1.put(sum, i);
+            }
+        }
+        return result;
     }    
     
     public static void main(String[] args) {
