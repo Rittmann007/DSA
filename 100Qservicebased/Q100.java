@@ -2274,6 +2274,29 @@ int peek(){
         }
         return result;
     }    
+
+//85. longest consecutive sequence
+    public int longestConsecutive(int[] nums) {
+        if (nums.length == 0)// for empty array
+            return 0;
+        HashSet<Integer> h1 = new HashSet<>();
+        int length = 1;// if array is not empty, 1 element will always remain
+        for (int i = 0; i < nums.length; i++) {
+            h1.add(nums[i]);
+        }
+        for (int i : h1) {// iterate through the set, not the original array
+            if (!h1.contains(i - 1)) {// if prev elm not in the set(it's the start of a seq)
+                int templength = 1;// start counting length including the curr one
+                int num = i;
+                while (h1.contains(num + 1)) {// count the seq
+                    templength++;
+                    num++;
+                }
+                length = Math.max(length, templength);// update the length
+            }
+        }
+        return length;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
