@@ -2302,7 +2302,7 @@ int peek(){
 //86. Top k frequent words
     public List<String> topKFrequent(String[] words, int k) {
         HashMap<String, Integer> h1 = new HashMap<>();
-        for (String str : words) {
+        for (String str : words) {// map the words to their frequency
             h1.put(str, h1.getOrDefault(str, 0) + 1);
         }
         PriorityQueue<String> pq = new PriorityQueue<>((s1, s2) -> {// custom comparator func, min heap
@@ -2316,12 +2316,41 @@ int peek(){
         for (String i : h1.keySet()) {
             pq.add(i);
             if (pq.size() > k)// k words needed
-                pq.poll();
+                pq.poll();// in pq we can only delete from head, thats why we kept it reversely sorted
         }
         List<String> result = new ArrayList<>();
         while (!pq.isEmpty())
             result.add(pq.poll());
         Collections.reverse(result);// in pq the order was reverse to what needed
+        return result;
+
+    }    
+
+//87. Top k frequent words (can also be done by above method)(but its more efficient O(n))
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> h1 = new HashMap<>();
+        List<Integer> arr[] = new List[nums.length + 1];// array of buckets(lists)
+        for (int i : nums) {
+            h1.put(i, h1.getOrDefault(i, 0) + 1);
+        }
+        for (int i : h1.keySet()) {
+            int freq = h1.get(i);
+            if (arr[freq] == null) {
+                arr[freq] = new ArrayList<>();
+            }
+            arr[freq].add(i);// elemnts with common freq, add in the same bucket
+        }
+
+        int result[] = new int[k];
+        int count = 0;
+        for (int i = arr.length - 1; i >= 0 && count < k; i--) {// traverse the bucket array from reverse and fill
+            if (arr[i] != null) {
+                for (Integer num : arr[i]) {
+                    result[count++] = num;
+                }
+            }
+        }
+
         return result;
 
     }    
