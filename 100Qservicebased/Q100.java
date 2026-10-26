@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
@@ -2296,6 +2297,33 @@ int peek(){
             }
         }
         return length;
+    }    
+
+//86. Top k frequent words
+    public List<String> topKFrequent(String[] words, int k) {
+        HashMap<String, Integer> h1 = new HashMap<>();
+        for (String str : words) {
+            h1.put(str, h1.getOrDefault(str, 0) + 1);
+        }
+        PriorityQueue<String> pq = new PriorityQueue<>((s1, s2) -> {// custom comparator func, min heap
+            int s1Count = h1.get(s1);
+            int s2Count = h1.get(s2);
+            if (s1Count == s2Count)// if count same, sort the words in lexicographic order
+                return s2.compareTo(s1);// means reverse lexicographic order (so "zebra" comes before "apple")(its not the same as of comparable interface)
+            return s1Count - s2Count;// else based on count
+        });
+
+        for (String i : h1.keySet()) {
+            pq.add(i);
+            if (pq.size() > k)// k words needed
+                pq.poll();
+        }
+        List<String> result = new ArrayList<>();
+        while (!pq.isEmpty())
+            result.add(pq.poll());
+        Collections.reverse(result);// in pq the order was reverse to what needed
+        return result;
+
     }    
     
     public static void main(String[] args) {
