@@ -2382,6 +2382,20 @@ int peek(){
     public int subarraysWithKDistinct(int[] nums, int k) {
         return utility(nums,k)-utility(nums,k-1); // this gives num of subarrays == k
     }
+
+//89. Contains Duplicate II
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashSet<Integer> h1 = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (h1.contains(nums[i]))// if a duplicate arrives
+                return true;
+            h1.add(nums[i]);
+            if (h1.size() > k) {// keep the size == k
+                h1.remove(nums[i - k]);
+            }
+        }
+        return false;
+    }
     
     public static void main(String[] args) {
         // Your code goes here
