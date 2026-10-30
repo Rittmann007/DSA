@@ -2391,11 +2391,22 @@ int peek(){
                 return true;
             h1.add(nums[i]);
             if (h1.size() > k) {// keep the size == k
-                h1.remove(nums[i - k]);
+                h1.remove(nums[i - k]);// so remove the oldest elemnt from set
             }
         }
         return false;
     }
+
+//90. Contains Duplicate
+    public boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> h1 = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (h1.contains(nums[i]))
+                return true;
+            h1.add(nums[i]);
+        }
+        return false;
+    }    
     
     public static void main(String[] args) {
         // Your code goes here
