@@ -2406,6 +2406,24 @@ int peek(){
             h1.add(nums[i]);
         }
         return false;
+    }
+    
+//91. Ransom Note
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int Ransomarr[] = new int[26];
+        int Magazinearr[] = new int[26];
+        for (int i = 0; i < ransomNote.length(); i++) {
+            Ransomarr[ransomNote.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < magazine.length(); i++) {
+            Magazinearr[magazine.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < Magazinearr.length; i++) {// see if ransomnote contains in magazine
+            if (Ransomarr[i] > Magazinearr[i]) {
+                return false;
+            }
+        }
+        return true;
     }    
     
     public static void main(String[] args) {
