@@ -2419,9 +2419,30 @@ int peek(){
             Magazinearr[magazine.charAt(i) - 'a']++;
         }
         for (int i = 0; i < Magazinearr.length; i++) {// see if ransomnote contains in magazine
-            if (Ransomarr[i] > Magazinearr[i]) {
+            if (Ransomarr[i] > Magazinearr[i]) {// if any frequency is higher than that of magazine
                 return false;
             }
+        }
+        return true;
+    }    
+
+//92. Isomorphic Strings
+    public boolean isIsomorphic(String s, String t) {
+        if (s.length() != t.length())
+            return false;
+        HashMap<Character, Character> sTot = new HashMap<>();
+        HashMap<Character, Character> tTos = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char sc = s.charAt(i);
+            char tc = t.charAt(i);
+            if (sTot.containsKey(sc) && sTot.get(sc) != tc) {// check forward mapping(s to t)
+                return false;
+            }
+            if (tTos.containsKey(tc) && tTos.get(tc) != sc) {// check reverse mapping(t to s)
+                return false;
+            }
+            sTot.put(sc, tc);
+            tTos.put(tc, sc);
         }
         return true;
     }    
