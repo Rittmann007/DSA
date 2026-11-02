@@ -2464,6 +2464,36 @@ int peek(){
         return len - maxActivites;
         // this returns minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
     }
+
+//94. Fractional knapsack
+    public static void knapsack(int value[],int weight[],int knapsack){
+        // 1st col-idx , 2nd col-ratio
+        double arr[][] = new double[value.length][2];
+        for(int i=0 ; i<arr.length ; i++){
+            arr[i][0] = i;
+            arr[i][1] = (double)value[i]/weight[i];
+        }
+        // sorting in ascending order
+        Arrays.sort(arr,(a,b)->Double.compare(a[1],b[1]));
+
+        double RecievedVal = 0;
+        // reversing the loop to get the large ratios first
+        for(int i=arr.length-1 ; i>=0 ; i--){
+            int idx = (int)arr[i][0];
+
+            if(knapsack>=weight[idx]){
+                RecievedVal+=value[idx];
+                knapsack-=weight[idx];
+
+            }else if(knapsack>0){
+                RecievedVal+=arr[i][1]*knapsack;
+                knapsack=0;
+            }
+        }
+        System.out.println(RecievedVal);
+    }
+
+
         
     
     public static void main(String[] args) {
