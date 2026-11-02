@@ -2493,7 +2493,20 @@ int peek(){
         System.out.println(RecievedVal);
     }
 
+//95. Maximum Ice Cream Bars
+    public int maxIceCream(int[] costs, int coins) {
+        Arrays.sort(costs);
+        int tempcoin = coins;
+        int count = 0;
 
+        for (int i = 0; i < costs.length; i++) {
+            if (tempcoin >= costs[i]) {// if remaining coin is greater than or equal to current cost
+                count++;// then only take that ice cream
+                tempcoin -= costs[i];
+            }
+        }
+        return count;
+    }    
         
     
     public static void main(String[] args) {
