@@ -2435,17 +2435,36 @@ int peek(){
         for (int i = 0; i < s.length(); i++) {
             char sc = s.charAt(i);
             char tc = t.charAt(i);
-            if (sTot.containsKey(sc) && sTot.get(sc) != tc) {// check forward mapping(s to t)
+            if (sTot.containsKey(sc) && sTot.get(sc) != tc) {// check forward mapping uniqueness(s to t)
                 return false;
             }
-            if (tTos.containsKey(tc) && tTos.get(tc) != sc) {// check reverse mapping(t to s)
+            if (tTos.containsKey(tc) && tTos.get(tc) != sc) {// check reverse mapping uniqueness(t to s)
                 return false;
             }
-            sTot.put(sc, tc);
+            sTot.put(sc, tc);// store the mappings
             tTos.put(tc, sc);
         }
         return true;
     }    
+
+// Greedy Algorithm
+//93. Non-overlapping Intervals (modified activity selection)
+    public int eraseOverlapIntervals(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));// Comparator.comparingInt(o -> o[1]) is slow, also safer than (a,b) -> a[1] - b[1]
+        int len = intervals.length;
+        int maxActivites = 1;
+        int lastend = intervals[0][1];
+        for (int i = 1; i < len; i++) {
+            if (lastend <= intervals[i][0]) {
+                maxActivites++;
+                lastend = intervals[i][1];
+            }
+        }
+
+        return len - maxActivites;
+        // this returns minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+    }
+        
     
     public static void main(String[] args) {
         // Your code goes here

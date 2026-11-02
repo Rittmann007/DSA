@@ -14,7 +14,7 @@ public class Greedy {
         }
 
     // sorting with ending time
-        Arrays.sort(activities,Comparator.comparingDouble(o -> o[2]));
+        Arrays.sort(activities,Comparator.comparingInt(o -> o[2]));
 
         int count = 0;
         ArrayList<Integer> arr = new ArrayList<>();
@@ -83,7 +83,7 @@ public class Greedy {
     public static void maxLenChain(int chains[][]) {
 
     // sorting with ending link el
-        Arrays.sort(chains,Comparator.comparingDouble(o -> o[1]));
+        Arrays.sort(chains,Comparator.comparingInt(o -> o[1]));
 
         int count = 0;
 
