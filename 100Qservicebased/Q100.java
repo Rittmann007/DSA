@@ -2462,7 +2462,7 @@ int peek(){
         }
 
         return len - maxActivites;
-        // this returns minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+        // this returns minimum number of intervals you need to remove, to make the rest of the intervals non-overlapping.
     }
 
 //94. Fractional knapsack
@@ -2506,6 +2506,24 @@ int peek(){
             }
         }
         return count;
+    }    
+
+//96. Indian coins
+    public static void Indian(int amount) {
+        Integer coins[] = {1,2,5,10,20,50,100,500,2000};
+        // to use reverseorder() we must use type 'Integer'
+        Arrays.sort(coins,Comparator.reverseOrder());
+        
+        int count = 0;
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < coins.length; i++) {
+            if(amount>=coins[i]){
+                count++;
+                arr.add(coins[i])
+                amount-=coins[i];
+            }
+        }
+        System.out.println(count);
     }    
         
     
