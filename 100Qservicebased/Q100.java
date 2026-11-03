@@ -1715,6 +1715,8 @@ int peek(){
         return st.size();
     }
 
+// ********************* see the queue part completely ********************************    
+
 // Recursion & Backtracking
 //66. Subsets
     public void subset(int nums[], List<List<Integer>> arr, List<Integer> al, int i) {
@@ -2525,6 +2527,50 @@ int peek(){
         }
         System.out.println(count);
     }    
+
+//97. Job Sequencing Problem
+// We have an array of jobs where every job has a deadline and associated profit if the job is
+// finished before the deadline. It is also given that every job takes a single unit of time, so the
+// minimum possible deadline for any job is 1. Maximize the total profit if only one job can be
+// scheduled at a time. 
+    static class job {
+    char id;
+    int deadline; int profit;
+    job(char id,int deadline,int profit){
+       this.id = id;
+       this.deadline = deadline;
+       this.profit = profit;
+    }    }
+
+    public static void main(job jobs[]) {
+        Arrays.sort(jobs,(a,b)->b.profit-a.profit);
+        
+        int maxdeadline = Integer.MIN_VALUE;
+        for (int i = 0; i < jobs.length; i++) {
+            if (maxdeadline<jobs[i].deadline) {
+                maxdeadline = jobs[i].deadline;
+            }
+        }
+
+        char jobschedule[] = new char[maxdeadline];
+        for (int i = 0; i < jobschedule.length; i++) {
+         jobschedule[i] = '-';
+        }
+
+        for (int i = 0; i < jobs.length; i++) {
+            job currjob = jobs[i];
+            for(int j=currjob.deadline ; j>=0 ; j--){//from curr deadline to 0
+
+                if (jobschedule[j]=='-') {// if we find a place in between
+                    jobschedule[i] = currjob.id;// occupy that place
+                    profit+= currjob.profit;// collect the profit
+                    break;// avoid further iteration
+                }
+            }
+        }
+
+        System.out.println(profit);
+    }
         
     
     public static void main(String[] args) {
