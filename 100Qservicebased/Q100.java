@@ -2521,7 +2521,7 @@ int peek(){
         for (int i = 0; i < coins.length; i++) {
             if(amount>=coins[i]){
                 count++;
-                arr.add(coins[i])
+                arr.add(coins[i]);
                 amount-=coins[i];
             }
         }
@@ -2556,7 +2556,8 @@ int peek(){
         for (int i = 0; i < jobschedule.length; i++) {
          jobschedule[i] = '-';
         }
-
+        
+        int profit = 0;
         for (int i = 0; i < jobs.length; i++) {
             job currjob = jobs[i];
             for(int j=currjob.deadline ; j>=0 ; j--){//from curr deadline to 0
@@ -2571,6 +2572,20 @@ int peek(){
 
         System.out.println(profit);
     }
+
+//98. Minimum Number of Arrows to Burst Balloons
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));//use compare, its more safe
+        int count = 1;
+        int lastend = points[0][1];// start a overlapping set with first balloon
+        for (int i = 1; i < points.length; i++) {
+            if (lastend < points[i][0]) {// if we find a non overlapping balloon
+                count++;// count an arrow
+                lastend = points[i][1];// start a new overlapping set
+            }
+        }
+        return count;
+    }    
         
     
     public static void main(String[] args) {
