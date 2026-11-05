@@ -2576,7 +2576,7 @@ int peek(){
 //98. Minimum Number of Arrows to Burst Balloons
     public int findMinArrowShots(int[][] points) {
         Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));//use compare, its more safe
-        int count = 1;
+        int count = 1;// count the 1st overlapping set
         int lastend = points[0][1];// start a overlapping set with first balloon
         for (int i = 1; i < points.length; i++) {
             if (lastend < points[i][0]) {// if we find a non overlapping balloon
@@ -2586,6 +2586,35 @@ int peek(){
         }
         return count;
     }    
+
+//99. Meeting Rooms II
+    public int minMeetingRooms(int[] start, int[] end) {
+		int arr[][] = new int[start.length + end.length][2];
+		for (int i = 0 ; i<start.length ; i++) {
+			arr[i][0] = start[i];// store start times with +1
+			arr[i][1] = 1;
+		}
+		for (int i = 0 ; i<end.length ; i++) {
+			int idx = i + start.length;
+			arr[idx][0] = end[i];// and end times with -1
+			arr[idx][1] = -1;
+		}
+		
+		Arrays.sort(arr, (a, b)-> {
+			if (a[0] == b[0]) {// if start and end times are same then, put -1 first the +1
+				return Integer.compare(a[1], b[1]);
+			}
+			return Integer.compare(a[0], b[0]);
+		});
+		
+		int count = 0;
+		int tempcount = 0;
+		for (int i = 0 ; i<arr.length ; i++) {
+			tempcount += arr[i][1];
+			count = Math.max(count, tempcount);// count max overlap
+		}
+		return count;
+	} 
         
     
     public static void main(String[] args) {
