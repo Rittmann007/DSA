@@ -2630,6 +2630,17 @@ int peek(){
         }
         return maxprofit;
     }    
+
+//101. Best Time to Buy and Sell Stock II
+    public int maxProfit(int[] prices) {
+        int maxprofit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {// just see two days at a time
+                maxprofit += prices[i] - prices[i - 1];// if there is profit, book it
+            }
+        }
+        return maxprofit;
+    }    
         
     
     public static void main(String[] args) {
