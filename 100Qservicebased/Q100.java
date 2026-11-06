@@ -2641,6 +2641,17 @@ int peek(){
         }
         return maxprofit;
     }    
+
+//102. Jump Game
+    public boolean canJump(int[] nums) {
+        int lastIdx = nums.length - 1;
+        for (int i = nums.length - 2; i >= 0; i--) {// start from 2nd last idx
+            if (i + nums[i] >= lastIdx) {// if we can reach last idx
+                lastIdx = i;// update it with that idx
+            }
+        }
+        return lastIdx == 0;// if it reaches 0 idx, return true
+    }
         
     
     public static void main(String[] args) {
