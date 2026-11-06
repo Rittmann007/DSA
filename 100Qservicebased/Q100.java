@@ -2601,7 +2601,7 @@ int peek(){
 		}
 		
 		Arrays.sort(arr, (a, b)-> {
-			if (a[0] == b[0]) {// if start and end times are same then, put -1 first the +1
+			if (a[0] == b[0]) {// if start and end times are same then, put -1 first, then +1
 				return Integer.compare(a[1], b[1]);
 			}
 			return Integer.compare(a[0], b[0]);
@@ -2615,6 +2615,21 @@ int peek(){
 		}
 		return count;
 	} 
+
+//100. Best Time to Buy and Sell Stock
+    public int maxProfit(int[] prices) {
+        int maxprofit = 0;
+        int buyprice = Integer.MAX_VALUE;
+        for (int i = 0; i < prices.length; i++) {
+            if (buyprice < prices[i]) { //condition for profit
+                int temprofit = prices[i] - buyprice;
+                maxprofit = Math.max(maxprofit, temprofit); //calculating the max profit among all
+            } else {
+                buyprice = prices[i]; // if not then buy at that price
+            }
+        }
+        return maxprofit;
+    }    
         
     
     public static void main(String[] args) {
