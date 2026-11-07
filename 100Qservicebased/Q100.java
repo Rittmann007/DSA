@@ -2652,6 +2652,31 @@ int peek(){
         }
         return lastIdx == 0;// if it reaches 0 idx, return true
     }
+
+//103. Jump Game ii
+    public int jump(int[] nums) {
+        if (nums.length == 1)
+            return 0;
+
+        int end = nums.length - 1;
+        int lastidx = 0;
+        int coverage = 0;
+        int jump = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            coverage = Math.max(coverage, i + nums[i]);// extending the max coverage from each window
+
+            if (i == lastidx) {// if we traversed the window
+                lastidx = coverage;// extend the window
+                jump++;
+            }
+
+            if (lastidx >= end) {// if we can reach end, in our new window
+                return jump;
+            }
+        }
+        return jump;
+    }
         
     
     public static void main(String[] args) {
