@@ -2677,6 +2677,21 @@ int peek(){
         }
         return jump;
     }
+
+//104. Assign Cookies
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);// sort both in ascending order
+        Arrays.sort(s);
+        int maxchild = 0;// acts as an idx and count, both
+        for (int i = 0; i < s.length; i++) {// traverse both arrays together
+            if (s[i] >= g[maxchild]) {// if can assign
+                maxchild++;// increase the count
+            }
+            if (maxchild > g.length - 1)// if childrens are finished
+                break;
+        }
+        return maxchild;
+    }    
         
     
     public static void main(String[] args) {
