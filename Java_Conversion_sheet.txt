@@ -62,3 +62,9 @@ Character.toLowerCase(ch);
 Parse with radix:
     int num = Integer.parseInt(str, 16); // hex
     int num = Integer.parseInt(str, 2);  // binary
+
+CIRCULAR ARRAY INCREMENT AND DECREMENT    
+--------------------------------------
+i = (i + 1) % n;
+
+i = (i - 1 + n) % n;

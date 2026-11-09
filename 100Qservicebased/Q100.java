@@ -2717,6 +2717,24 @@ int peek(){
         }
         return startidx;
     }    
+
+//106. Largest Number
+    public String largestNumber(int[] nums) {
+        String arr[] = new String[nums.length];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = String.valueOf(nums[i]);
+        }
+        
+        // comparator works only on objects, not primitives, so cant directly sort
+        // in 2d array, it is array of array objects, so its right
+        Arrays.sort(arr, (a, b) -> (b + a).compareTo(a + b));// decending order// it sorts by lexicographical order
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(arr[i]);
+        }
+        return sb.charAt(0) == '0' ? "0" : sb.toString();// if first char is 0 then its 0 only(not 00 or 000)
+    }
         
     
     public static void main(String[] args) {
