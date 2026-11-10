@@ -2735,6 +2735,29 @@ int peek(){
         }
         return sb.charAt(0) == '0' ? "0" : sb.toString();// if first char is 0 then its 0 only(not 00 or 000)
     }
+
+//107. Candy (there is a sol with o(1) space complexity)
+    public int candy(int[] ratings) {
+        int arr[] = new int[ratings.length];
+        arr[0] = 1;
+        for (int i = 1; i < arr.length; i++) {// left pass
+            if (ratings[i - 1] < ratings[i]) {
+                arr[i] = arr[i - 1] + 1;
+            } else {
+                arr[i] = 1;
+            }
+        }
+        for (int i = arr.length - 2; i >= 0; i--) {// right pass
+            if (ratings[i] > ratings[i + 1]) {// but here we're updating it in the same array
+                arr[i] = Math.max(arr[i], arr[i + 1] + 1);
+            }
+        }
+        int candies = 0;
+        for (int i = 0; i < ratings.length; i++) {// total
+            candies += arr[i];
+        }
+        return candies;
+    }    
         
     
     public static void main(String[] args) {
