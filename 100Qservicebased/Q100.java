@@ -2736,7 +2736,7 @@ int peek(){
         return sb.charAt(0) == '0' ? "0" : sb.toString();// if first char is 0 then its 0 only(not 00 or 000)
     }
 
-//107. Candy (there is a sol with o(1) space complexity)
+//107. Candy (there is a sol with o(1) space complexity-> but its a little tuff🥲)
     public int candy(int[] ratings) {
         int arr[] = new int[ratings.length];
         arr[0] = 1;
@@ -2757,6 +2757,38 @@ int peek(){
             candies += arr[i];
         }
         return candies;
+    }    
+
+//108. Split Array into Consecutive Subsequences
+    public boolean isPossible(int[] nums) {
+        HashMap<Integer, Integer> availability = new HashMap<>();
+        HashMap<Integer, Integer> vacancy = new HashMap<>();
+
+        for (int i : nums) {// fill the main map
+            availability.put(i, availability.getOrDefault(i, 0) + 1);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            int curr = nums[i];
+            if (availability.get(curr) <= 0) {// if not available, move to the next
+                continue;
+            }
+            if (vacancy.getOrDefault(curr, 0) > 0) {// if any existing group wants it
+                availability.put(curr, availability.getOrDefault(curr, 0) - 1);
+                vacancy.put(curr, vacancy.getOrDefault(curr, 0) - 1);
+
+                vacancy.put(curr + 1, vacancy.getOrDefault(curr + 1, 0) + 1);// put its next elm in the vacancy
+            } else if (availability.getOrDefault(curr + 1, 0) > 0 && availability.getOrDefault(curr + 2, 0) > 0) {// if i,i+1,i+2 is available and any group doesn't wants i
+                availability.put(curr, availability.getOrDefault(curr, 0) - 1);
+                availability.put(curr + 1, availability.getOrDefault(curr + 1, 0) - 1);
+                availability.put(curr + 2, availability.getOrDefault(curr + 2, 0) - 1);
+
+                vacancy.put(curr + 3, vacancy.getOrDefault(curr + 3, 0) + 1);// put its next elm after the 3, in the vacancy
+            } else {
+                return false;
+            }
+        }
+        return true;
     }    
         
     
