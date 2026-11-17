@@ -11,6 +11,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
+import javax.swing.tree.TreeNode;
+
 import org.w3c.dom.Node;
 
 public class Q100 {
@@ -2789,6 +2791,40 @@ int peek(){
             }
         }
         return true;
+    }    
+
+// TREE
+// see preorder,postorder,inorder traversal
+//109. Binary Tree Level Order Traversal
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if (root == null)
+            return new ArrayList<>();
+        List<List<Integer>> arr = new ArrayList<>();
+        Queue<TreeNode> q1 = new LinkedList<>();
+        q1.add(root);
+        q1.add(null);// to mark the end of each level
+        List<Integer> temp = new ArrayList<>();
+        while (!q1.isEmpty()) {
+            TreeNode i = q1.remove();
+            if (i == null) {
+                arr.add(temp);// add each level
+                if (q1.isEmpty()) {// if all nodes traversed
+                    return arr;
+                } else {
+                    temp = new ArrayList<>();// after each level, reset this
+                    q1.add(null);
+                }
+            } else {
+                temp.add(i.val);// add curr node to ans
+                if (i.left != null) {// and its left,right
+                    q1.add(i.left);
+                }
+                if (i.right != null) {
+                    q1.add(i.right);
+                }
+            }
+        }
+        return arr;
     }    
         
     

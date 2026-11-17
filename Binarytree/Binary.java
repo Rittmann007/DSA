@@ -136,7 +136,7 @@ int diameter(Node root){
     int Lh = height(root.left);
     int Ldia = diameter(root.left);
     int Rh = height(root.right);
-    int Rdia = height(root.right);
+    int Rdia = diameter(root.right);
 
     int self = Lh + Rh + 1;
     return Math.max(self, Math.max(Rdia, Ldia));
@@ -196,34 +196,44 @@ public class Binary {
         if (root == null) {
             return;
         }
-        java.util.Queue<TopviewInfo> q1 = new LinkedList<>();
-        java.util.HashMap<Integer,Integer> h1 = new HashMap<>();
-        q1.add(new TopviewInfo(root,0));
+        java.util.Queue<TopviewInfo> q1 = new LinkedList<>();// for traversal
+        java.util.HashMap<Integer, Integer> h1 = new HashMap<>();// for top view calculation
+        q1.add(new TopviewInfo(root, 0));// root has 0 hd
         int min = 0;
         int max = 0;
+        // same code as levelorder traversal, all calculations are happening simultaneously
         while (!q1.isEmpty()) {
-        TopviewInfo t1 = q1.remove();
-        if (!h1.containsKey(t1.HorizontalDistance)) {
-            
-            h1.put(t1.HorizontalDistance, t1.n1.data);
-        }
-            if (t1.n1.left != null) {
-                
-                q1.add(new TopviewInfo(t1.n1.left,t1.HorizontalDistance-1));
-                min = Math.min(min, t1.HorizontalDistance-1);// max cannot be affected by left child
+            TopviewInfo t1 = q1.remove();
+            if (t1 == null) {
+                if (q1.isEmpty()) {
+                    break;
+                } else {
+                    q1.add(null);
+                }
+            } else {
+    
+                if (!h1.containsKey(t1.HorizontalDistance)) {// if hd appears first time
+    
+                    h1.put(t1.HorizontalDistance, t1.n1.data);
+                }
+                if (t1.n1.left != null) {// add left and right tree in the queue
+    
+                    q1.add(new TopviewInfo(t1.n1.left, t1.HorizontalDistance - 1));// calculate the hd also
+                    min = Math.min(min, t1.HorizontalDistance - 1);// max cannot be affected by left child
+                }
+                if (t1.n1.right != null) {
+    
+                    q1.add(new TopviewInfo(t1.n1.right, t1.HorizontalDistance + 1));
+                    max = Math.max(max, t1.HorizontalDistance + 1);// same for min
+                }
             }
-            if (t1.n1.right != null) {
-                
-                q1.add(new TopviewInfo(t1.n1.right,t1.HorizontalDistance+1));
-                max = Math.max(max, t1.HorizontalDistance+1);// same for min
-            }
-        
+    
         }
-        for (int i = min; i <= max; i++) {
+        for (int i = min; i <= max; i++) {// so that we can traverse the map in right order
             System.out.print(h1.get(i));
         }
-
-    }    
+    
+    }
 
 // kth level of a tree
     public static void Kth(Node n,int level,int k) {
@@ -239,11 +249,11 @@ public class Binary {
     }    
 
 // lowest common ancestor for two nodes
-    public static boolean getpath(Node root,int n,java.util.ArrayList<Integer> path) {
+    public static boolean getpath(Node root,int n,java.util.ArrayList<Node> path) {
         if (root == null) {
             return false;
         }
-        path.add(root.data);
+        path.add(root);
         if (root.data == n) {
             return true;
         }
@@ -256,28 +266,28 @@ public class Binary {
 
     }
     public static void Lca(int n1,int n2,Node root) {
-        java.util.ArrayList<Integer> path1 = new ArrayList<>();
-        java.util.ArrayList<Integer> path2 = new ArrayList<>();
+        java.util.ArrayList<Node> path1 = new ArrayList<>();
+        java.util.ArrayList<Node> path2 = new ArrayList<>();
 
         getpath(root,n1,path1);// getting the paths
         getpath(root,n2,path2);
         
         int i = 0; // then traversing to find the common
-        while(i < path1.size()-1 && i < path2.size()-1) {
-            if (path1.get(i)!=path2.get(i)) {
+        while(i < path1.size() && i < path2.size()) {
+            if (path1.get(i)!=path2.get(i)) {// from root to destination nodes, where the two paths separate
                 break;
             }
             i++;
         }
 
-        System.out.println(path1.get(i-1));
+        System.out.println(path1.get(i-1));// we need the previous, last common node
     }    
     //more optimized in terms of space complexity
     public static Node Lca2(int n1,int n2,Node root) {
         if (root == null || root.data == n1 || root.data == n2) {
             return root;
         }
-        Node left = Lca2(n1,n2,root.left);//find leftsubtree
+        Node left = Lca2(n1,n2,root.left);//find target nodes in leftsubtree
         Node right = Lca2(n1, n2, root.right);//find right subtree
         if (left == null) {//anyone null, means the two are on other subtree
             return right;
@@ -329,7 +339,7 @@ public class Binary {
         if (left == -1 && right == -1) {
             return -1;
         }
-        int max = Math.max(left, right);
+        int max = Math.max(left, right);// just a shorter version of the condition, used in distH
         if (max+1 == k) { //target ancestor reached
             System.out.println(root.data);
         }
