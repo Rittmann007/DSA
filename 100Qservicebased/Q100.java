@@ -2846,7 +2846,6 @@ int peek(){
             this.height = height;
         }
     }
-
     public static info helper(TreeNode root) {
         if (root == null) {
             return new info(0, 0);
@@ -2854,14 +2853,33 @@ int peek(){
         info left = helper(root.left);
         info right = helper(root.right);
 
-        int height = Math.max(left.height, right.height) + 1;
-        int selfdia = left.height + right.height + 1;
-        int diameter = Math.max(selfdia, Math.max(left.dia, right.dia));
+        int height = Math.max(left.height, right.height) + 1;// calculate the height
+        int selfdia = left.height + right.height + 1;// formula for diameter for each node
+        int diameter = Math.max(selfdia, Math.max(left.dia, right.dia));// select the max
         return new info(diameter, height);
     }
-
     public int diameterOfBinaryTree(TreeNode root) {
         return helper(root).dia - 1;// in leetcode, it was defined as no of edges, so....
+    }    
+
+//112. Same Tree
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {// base case
+            return true;
+        }
+        if ((p == null && q != null) || (p != null && q == null)) {// 4 conditions
+            return false;
+        }
+        if (!isSameTree(p.left, q.left)) {
+            return false;
+        }
+        if (!isSameTree(p.right, q.right)) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
+        }
+        return true;
     }    
         
     
