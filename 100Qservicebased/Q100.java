@@ -2837,6 +2837,32 @@ int peek(){
 
         return Math.max(left, right) + 1;
     }    
+
+//111. Diameter of Binary Tree
+    public static class info {
+        int dia; int height;
+        info(int dia, int height) {
+            this.dia = dia;
+            this.height = height;
+        }
+    }
+
+    public static info helper(TreeNode root) {
+        if (root == null) {
+            return new info(0, 0);
+        }
+        info left = helper(root.left);
+        info right = helper(root.right);
+
+        int height = Math.max(left.height, right.height) + 1;
+        int selfdia = left.height + right.height + 1;
+        int diameter = Math.max(selfdia, Math.max(left.dia, right.dia));
+        return new info(diameter, height);
+    }
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        return helper(root).dia - 1;// in leetcode, it was defined as no of edges, so....
+    }    
         
     
     public static void main(String[] args) {
