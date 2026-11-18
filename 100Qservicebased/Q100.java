@@ -2897,6 +2897,23 @@ int peek(){
         }
             return root;//if left and right both are not null
     }    
+
+//114. Validate Binary Search Tree
+    public static boolean helper(TreeNode root, TreeNode max, TreeNode min) {
+        if (root == null) {// null node is also a bst
+            return true;
+        }
+        if (min != null && root.val <= min.val) {// min < root < max
+            return false;
+        }
+        if (max != null && root.val >= max.val) {// also duplicate vals are not allowed
+            return false;
+        }
+        return helper(root.left, root, min) && helper(root.right, max, root);//if both left and right return true
+    }
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
+    }    
         
     
     public static void main(String[] args) {

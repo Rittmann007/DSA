@@ -156,7 +156,7 @@ public class Bst {
     }    
 
 // is valid BST
-    public static boolean isValidBst(Node root,Node max,Node min) {
+    public static boolean isValidBst(Node root,Node max,Node min) {// call this with null min,max vals
         if (root == null) {
             return true;
         }
