@@ -2881,6 +2881,22 @@ int peek(){
         }
         return true;
     }    
+
+//113. Lowest Common Ancestor of a Binary Search Tree
+    public static Node Lca2(int n1,int n2,Node root) {// here we find the first ancestor/Node whose subtree has both n1,n2
+        if (root == null || root.data == n1 || root.data == n2) {
+            return root;
+        }
+        Node left = Lca2(n1,n2,root.left);//find target nodes in leftsubtree
+        Node right = Lca2(n1, n2, root.right);//find right subtree
+        if (left == null) {//anyone null, means the two are on other subtree
+            return right;
+        }
+        if(right == null){
+            return left;
+        }
+            return root;//if left and right both are not null
+    }    
         
     
     public static void main(String[] args) {

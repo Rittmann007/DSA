@@ -283,7 +283,7 @@ public class Binary {
         System.out.println(path1.get(i-1));// we need the previous, last common node
     }    
     //more optimized in terms of space complexity
-    public static Node Lca2(int n1,int n2,Node root) {
+    public static Node Lca2(int n1,int n2,Node root) {// here we find the first ancestor/Node whose subtree has both n1,n2
         if (root == null || root.data == n1 || root.data == n2) {
             return root;
         }
