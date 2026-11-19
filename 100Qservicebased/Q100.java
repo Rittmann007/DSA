@@ -2914,6 +2914,44 @@ int peek(){
     public boolean isValidBST(TreeNode root) {
         return helper(root, null, null);
     }    
+
+//115. Serialize and Deserialize Binary Tree
+    // Encodes a tree to a single string.
+    public static void helper1(TreeNode root, StringBuilder str) {
+        if (root == null) {// storing preorder with "," as a delimeter-> "1,-2,3,*,*,42,5" so that multiple digit and -ve values can be stored also
+            str.append("*,");// "*" denotes a null node
+            return;
+        }
+        str.append(String.valueOf(root.val)).append(",");
+        helper1(root.left, str);
+        helper1(root.right, str);
+    }
+
+    public String serialize(TreeNode root) {
+        StringBuilder str = new StringBuilder();
+        helper1(root, str);
+        return str.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public static TreeNode helper2(String arr[], int idx[]) {// preorder to binary tree
+        idx[0]++;
+        if (arr[idx[0]].equals("*")) {
+            return null;
+        }
+        TreeNode n1 = new TreeNode(Integer.parseInt(arr[idx[0]]));
+        n1.left = helper2(arr, idx);
+        n1.right = helper2(arr, idx);
+        return n1;
+    }
+    public TreeNode deserialize(String data) {
+        // idx as a static var can't be used in that problem due to restrictions
+        // so we used a array with size 1
+        // this is passed by reference, not by value. so the state would persist across recursive calls
+        int idx[] = new int[] { -1 };
+        String arr[] = data.split(",");// seperate the values between commas
+        return helper2(arr, idx);
+    }    
         
     
     public static void main(String[] args) {
