@@ -2952,6 +2952,19 @@ int peek(){
         String arr[] = data.split(",");// seperate the values between commas
         return helper2(arr, idx);
     }    
+
+//116. Path Sum
+    public boolean hasPathSum(TreeNode root, int targetSum) {// this targetsum val would not persist across rec calls, if it would we must do backtracking then
+        if (root == null) {
+            return false;
+        }
+
+        if (root.left == null && root.right == null) {//in left node if target==its val
+            return targetSum == root.val ? true : false;
+        }
+
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }    
         
     
     public static void main(String[] args) {
