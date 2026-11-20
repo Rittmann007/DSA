@@ -2989,6 +2989,32 @@ int peek(){
         helper(root, targetSum, arr, temp);
         return arr;
     }    
+
+//118. Path Sum III
+    public static void helper(TreeNode root, int target, HashMap<Long, Integer> h1, int count[], Long sum) {
+        if (root == null) {
+            return;
+        }
+        sum += root.val;
+        if (h1.containsKey(sum - target)) {// if that subarray found
+            count[0] += h1.get(sum - target);
+        }
+        h1.put(sum, h1.getOrDefault(sum, 0) + 1);// update the map
+        helper(root.left, target, h1, count, sum);
+        helper(root.right, target, h1, count, sum);
+        if (h1.get(sum) == 0) {// also backtrack
+            h1.remove(sum);
+        } else {
+            h1.put(sum, h1.get(sum) - 1);
+        }
+    }
+    public int pathSum(TreeNode root, int targetSum) {
+        int arr[] = new int[] { 0 };
+        HashMap<Long, Integer> h1 = new HashMap<>();
+        h1.put((long) 0, 1);// due to leetcode constraint, we're dealing the sum in long
+        helper(root, targetSum, h1, arr, (long) 0);
+        return arr[0];
+    }    
         
     
     public static void main(String[] args) {
