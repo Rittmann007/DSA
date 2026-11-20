@@ -3015,6 +3015,25 @@ int peek(){
         helper(root, targetSum, h1, arr, (long) 0);
         return arr[0];
     }    
+
+//119. Sum Root to Leaf Numbers
+    public static void helper(TreeNode root, int sum[], int num) {
+        if (root == null) {
+            return;
+        }
+        num = (num * 10) + root.val;// make the number along the way
+        if (root.left == null && root.right == null) {// at the leaf node
+            sum[0] += num;
+            return;
+        }
+        helper(root.left, sum, num);
+        helper(root.right, sum, num);
+    }
+    public int sumNumbers(TreeNode root) {
+        int arr[] = new int[] { 0 };
+        helper(root, arr, 0);
+        return arr[0];
+    }    
         
     
     public static void main(String[] args) {
