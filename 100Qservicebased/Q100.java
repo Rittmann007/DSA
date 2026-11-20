@@ -2959,11 +2959,35 @@ int peek(){
             return false;
         }
 
-        if (root.left == null && root.right == null) {//in left node if target==its val
+        if (root.left == null && root.right == null) {//in leaf node if target==its val
             return targetSum == root.val ? true : false;
         }
 
         return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }    
+
+//117. Path Sum II
+    public static void helper(TreeNode root, int target, List<List<Integer>> arr, List<Integer> temp) {
+        if (root == null) {
+            return;
+        }
+        temp.add(root.val);
+        if (root.left == null && root.right == null) {//in left node if target==its val
+            if (target == root.val) {
+                arr.add(new ArrayList<>(temp));// gotta create a new list, unless it will modify by the remaining recursion
+            }
+            temp.remove(temp.size() - 1);// for leaf node we have to add a backtracking step before returning
+            return;
+        }
+        helper(root.left, target - root.val, arr, temp);
+        helper(root.right, target - root.val, arr, temp);
+        temp.remove(temp.size() - 1);
+    }
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> arr = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        helper(root, targetSum, arr, temp);
+        return arr;
     }    
         
     
