@@ -3106,6 +3106,59 @@ int peek(){
         root.right = left;
         return root;
     }    
+
+//124. top view of a tree
+    class TopviewInfo {
+        Node n1;
+        int HorizontalDistance;
+    
+        TopviewInfo(Node n1, int HorizontalDistance) {
+            this.n1 = n1;
+            this.HorizontalDistance = HorizontalDistance;
+        }
+    }
+    public static void Topview(Node root) {
+        if (root == null) {
+            return;
+        }
+        java.util.Queue<TopviewInfo> q1 = new LinkedList<>();// for traversal
+        java.util.HashMap<Integer, Integer> h1 = new HashMap<>();// for top view calculation
+        q1.add(new TopviewInfo(root, 0));// root has 0 hd
+        int min = 0;
+        int max = 0;
+        // same code as levelorder traversal, all calculations are happening simultaneously
+        while (!q1.isEmpty()) {
+            TopviewInfo t1 = q1.remove();
+            if (t1 == null) {
+                if (q1.isEmpty()) {
+                    break;
+                } else {
+                    q1.add(null);
+                }
+            } else {
+    
+                if (!h1.containsKey(t1.HorizontalDistance)) {// if hd appears first time
+    
+                    h1.put(t1.HorizontalDistance, t1.n1.data);
+                }
+                if (t1.n1.left != null) {// add left and right tree in the queue
+    
+                    q1.add(new TopviewInfo(t1.n1.left, t1.HorizontalDistance - 1));// calculate the hd also
+                    min = Math.min(min, t1.HorizontalDistance - 1);// max cannot be affected by left child
+                }
+                if (t1.n1.right != null) {
+    
+                    q1.add(new TopviewInfo(t1.n1.right, t1.HorizontalDistance + 1));
+                    max = Math.max(max, t1.HorizontalDistance + 1);// same for min
+                }
+            }
+    
+        }
+        for (int i = min; i <= max; i++) {// so that we can traverse the map in right order
+            System.out.print(h1.get(i));
+        }
+    
+    }    
         
     
     public static void main(String[] args) {
