@@ -3048,6 +3048,20 @@ int peek(){
             return searchBST(root.right, val);// search in right
         }
     }    
+
+//121. Insert into a Binary Search Tree
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);// if root null, return the new node
+        }
+        if (root.val > val) {
+            root.left = insertIntoBST(root.left, val);// add in left
+        }
+        if (root.val < val) {
+            root.right = insertIntoBST(root.right, val);// add in right
+        }
+        return root;
+    }    
         
     
     public static void main(String[] args) {
