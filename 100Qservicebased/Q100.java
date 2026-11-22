@@ -3094,6 +3094,18 @@ int peek(){
         }
         return root;
     }    
+
+//123. Invert Binary Tree
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        TreeNode left = invertTree(root.left);// make each subtree a mirror
+        TreeNode right = invertTree(root.right);
+        root.left = right;// swap subtrees
+        root.right = left;
+        return root;
+    }    
         
     
     public static void main(String[] args) {
