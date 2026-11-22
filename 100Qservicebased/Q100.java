@@ -3062,6 +3062,38 @@ int peek(){
         }
         return root;
     }    
+
+//122. Delete Node in a BST
+    public static TreeNode successor(TreeNode rightroot) {
+        while (rightroot.left != null) {// find leftmost node
+            rightroot = rightroot.left;
+        }
+        return rightroot;
+    }
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return root;
+        }
+        if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            if (root.left == null && root.right == null) {// no child
+                return null;
+            }
+            if (root.left == null) {// one child
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            } else {// both child
+                TreeNode inorderSuccessor = successor(root.right);// left most node of right subtree
+                root.val = inorderSuccessor.val;// update the val with it
+                root.right = deleteNode(root.right, inorderSuccessor.val);// then delete the inorder successor from right subtree
+            }
+        }
+        return root;
+    }    
         
     
     public static void main(String[] args) {
