@@ -3024,7 +3024,6 @@ int peek(){
         num = (num * 10) + root.val;// make the number along the way
         if (root.left == null && root.right == null) {// at the leaf node
             sum[0] += num;
-            return;
         }
         helper(root.left, sum, num);
         helper(root.right, sum, num);
@@ -3173,6 +3172,28 @@ int peek(){
     }
     public TreeNode sortedArrayToBST(int[] nums) {
         return helper(nums, 0, nums.length - 1);
+    }    
+
+//126. Binary Tree Paths
+    public static void helper(TreeNode root, List<String> arr, StringBuilder sb) {
+        if (root == null) {
+            return;
+        }
+        int length = sb.length();
+        sb.append(String.valueOf(root.val));
+        if (root.left == null && root.right == null) {// leaf node
+            arr.add(sb.toString());// add to the list
+        } else {
+            sb.append("->");// ans was to be printed in ["1->2->5","1->3"] format
+            helper(root.left, arr, sb);
+            helper(root.right, arr, sb);
+        }
+        sb.setLength(length);// backtrack
+    }
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> arr = new ArrayList<>();
+        helper(root, arr, new StringBuilder());
+        return arr;
     }    
         
     
