@@ -3159,6 +3159,21 @@ int peek(){
         }
     
     }    
+
+//125. Convert Sorted Array to Binary Search Tree
+    public static TreeNode helper(int nums[], int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = start + (end - start) / 2;
+        TreeNode root = new TreeNode(nums[mid]);// mid as root
+        root.left = helper(nums, start, mid - 1);// left subtree = left of mid
+        root.right = helper(nums, mid + 1, end);// right subtree = right of mid
+        return root;
+    }
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helper(nums, 0, nums.length - 1);
+    }    
         
     
     public static void main(String[] args) {
