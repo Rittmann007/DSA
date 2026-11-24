@@ -3217,6 +3217,26 @@ int peek(){
     public boolean isBalanced(TreeNode root) {
         return helper(root) != -1;
     }    
+
+//128. Kth Smallest Element in a BST
+    static int ans = -1;
+    public static void helper(TreeNode root, int k, int count[]) {
+        if (root == null) {
+            return;
+        }
+        helper(root.left, k, count);
+        count[0]++;
+        if (count[0] == k) {// return kth smallest
+            ans = root.val;
+            return;
+        }
+        helper(root.right, k, count);
+    }
+    public int kthSmallest(TreeNode root, int k) {
+        int arr[] = new int[] { 0 };
+        helper(root, k, arr);
+        return ans;
+    }    
         
     
     public static void main(String[] args) {
