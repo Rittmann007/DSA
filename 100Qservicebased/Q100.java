@@ -3263,6 +3263,32 @@ int peek(){
         }
         return helper(root.left, root.right);
     }
+
+//130. Binary Tree Right Side View
+    public List<Integer> rightSideView(TreeNode root) {
+        if (root == null)
+            return new ArrayList<>();
+        List<Integer> arr = new ArrayList<>();
+        Queue<TreeNode> q1 = new LinkedList<>();
+        q1.add(root);
+        while (!q1.isEmpty()) {
+            int size = q1.size();
+            for (int i = 0; i < size; i++) {// traverses each level
+                TreeNode n1 = q1.remove();
+                if (i == size - 1) {// adds last element of each level
+                    arr.add(n1.val);
+                }
+
+                if (n1.left != null) {
+                    q1.add(n1.left);
+                }
+                if (n1.right != null) {
+                    q1.add(n1.right);
+                }
+            }
+        }
+        return arr;
+    }    
         
     
     public static void main(String[] args) {
