@@ -3236,7 +3236,33 @@ int peek(){
         int arr[] = new int[] { 0 };
         helper(root, k, arr);
         return ans;
-    }    
+    }   
+    
+//129. Symmetric Tree
+    public static boolean helper(TreeNode n1, TreeNode n2) {
+        if (n1 == null && n2 == null) {
+            return true;
+        }
+        if ((n1 != null && n2 == null) || (n1 == null && n2 != null)) {
+            return false;
+        }
+        if (n1.val != n2.val) {
+            return false;
+        }
+        if (!helper(n1.left, n2.right)) {// left subtree is equal to right of other
+            return false;
+        }
+        if (!helper(n1.right, n2.left)) {// right subtree is equal to left of other
+            return false;
+        }
+        return true;
+    }
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return helper(root.left, root.right);
+    }
         
     
     public static void main(String[] args) {
