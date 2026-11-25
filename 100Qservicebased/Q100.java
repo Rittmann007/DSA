@@ -3275,7 +3275,7 @@ int peek(){
             int size = q1.size();
             for (int i = 0; i < size; i++) {// traverses each level
                 TreeNode n1 = q1.remove();
-                if (i == size - 1) {// adds last element of each level
+                if (i == size - 1) {// adds last element of each level(for left side view i==0)
                     arr.add(n1.val);
                 }
 
@@ -3289,6 +3289,45 @@ int peek(){
         }
         return arr;
     }    
+
+//131. Bottom View of Binary Tree
+    public static class BottomViewNode {
+    Node n1;
+    int hd;
+    BottomViewNode(Node n1, int hd) {
+      this.n1 = n1;
+      this.hd = hd;
+    }
+  }
+  public ArrayList<Integer> bottomView(Node root) {
+    if (root == null)
+      return new ArrayList<>();
+
+    ArrayList<Integer> arr = new ArrayList<>();
+    Queue<BottomViewNode> q1 = new LinkedList<>();
+    HashMap<Integer, Integer> h1 = new HashMap<>();
+    int max = 0;
+    int min = 0;
+    q1.add(new BottomViewNode(root, 0));
+    while (!q1.isEmpty()) {
+      BottomViewNode n = q1.remove();
+      h1.put(n.hd, n.n1.data);// overwrite with the latest node with same hd
+      
+      if (n.n1.left != null) {
+        q1.add(new BottomViewNode(n.n1.left, n.hd - 1));
+        min = Math.min(min, n.hd - 1);
+      }
+      if (n.n1.right != null) {
+        q1.add(new BottomViewNode(n.n1.right, n.hd + 1));
+        max = Math.max(max, n.hd + 1);
+      }
+    }
+
+    for (int i = min; i <= max; i++) {
+      arr.add(h1.get(i));
+    }
+    return arr;
+  }    
         
     
     public static void main(String[] args) {
