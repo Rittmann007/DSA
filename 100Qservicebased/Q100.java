@@ -3366,6 +3366,43 @@ int peek(){
         return arr;
     }
 
+//133. Binary Tree Zigzag Level Order Traversal
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null)
+            return new ArrayList<>();
+        List<List<Integer>> arr = new ArrayList<>();
+        Queue<TreeNode> q1 = new LinkedList<>();
+        q1.add(root);
+        boolean flag = false;
+        while (!q1.isEmpty()) {
+            int size = q1.size();
+            List<Integer> temp = new ArrayList<>();
+            Stack<Integer> s1 = new Stack<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode n1 = q1.remove();
+
+                if (flag == true) {// for reverse traversal first push all in that level in stack
+                    s1.add(n1.val);
+                } else {
+                    temp.add(n1.val);
+                }
+
+                if (n1.left != null) {
+                    q1.add(n1.left);
+                }
+                if (n1.right != null) {
+                    q1.add(n1.right);
+                }
+            }
+            flag = !flag;
+            while (!s1.isEmpty()) {// then pop and add in the list
+                temp.add(s1.pop());
+            }
+            arr.add(temp);
+        }
+        return arr;
+    }    
+
 
         
     
