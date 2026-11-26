@@ -3312,7 +3312,7 @@ int peek(){
     while (!q1.isEmpty()) {
       BottomViewNode n = q1.remove();
       h1.put(n.hd, n.n1.data);// overwrite with the latest node with same hd
-      
+
       if (n.n1.left != null) {
         q1.add(new BottomViewNode(n.n1.left, n.hd - 1));
         min = Math.min(min, n.hd - 1);
@@ -3328,6 +3328,45 @@ int peek(){
     }
     return arr;
   }    
+
+//132. Vertical traversal (without the same level sorting condition)
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        if (root == null)
+            return new ArrayList<>();
+
+        List<List<Integer>> arr = new ArrayList<>();
+        Queue<VerticalNode> q1 = new LinkedList<>();
+        HashMap<Integer, ArrayList<Integer>> h1 = new HashMap<>();
+        int max = 0;
+        int min = 0;
+        q1.add(new VerticalNode(root, 0));
+        while (!q1.isEmpty()) {
+            VerticalNode n = q1.remove();
+            if (h1.containsKey(n.hd)) {// if hd exists, then add in the existing list
+                h1.get(n.hd).add(n.n1.val);
+            } else {
+                ArrayList<Integer> temp = new ArrayList<>();// else make new
+                temp.add(n.n1.val);// then add
+                h1.put(n.hd, temp);
+            }
+
+            if (n.n1.left != null) {
+                q1.add(new VerticalNode(n.n1.left, n.hd - 1));
+                min = Math.min(min, n.hd - 1);
+            }
+            if (n.n1.right != null) {
+                q1.add(new VerticalNode(n.n1.right, n.hd + 1));
+                max = Math.max(max, n.hd + 1);
+            }
+        }
+
+        for (int i = min; i <= max; i++) {
+            arr.add(h1.get(i));
+        }
+        return arr;
+    }
+
+
         
     
     public static void main(String[] args) {
