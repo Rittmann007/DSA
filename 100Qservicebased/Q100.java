@@ -3403,6 +3403,27 @@ int peek(){
         return arr;
     }    
 
+//134. Construct Binary Tree from Preorder and Inorder Traversal
+    public static TreeNode helper(int[] preorder, int inorder[], int index[], int left, int right, HashMap<Integer, Integer> h1) {
+        if (left > right)// condition for null nodes
+            return null;
+
+        index[0]++;
+        TreeNode root = new TreeNode(preorder[index[0]]);
+        int currPos = h1.get(root.val);// find the idx of root in inorder
+        root.left = helper(preorder, inorder, index, left, currPos - 1, h1);// left vals of root in inorder, would be in left subtree
+        root.right = helper(preorder, inorder, index, currPos + 1, right, h1);// same for right
+        return root;
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int arr[] = new int[] { -1 };
+        HashMap<Integer, Integer> h1 = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            h1.put(inorder[i], i);
+        }
+        return helper(preorder, inorder, arr, 0, inorder.length - 1, h1);
+    }    
+
 
         
     
